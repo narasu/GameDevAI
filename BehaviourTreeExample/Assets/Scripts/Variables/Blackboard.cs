@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Blackboard : MonoBehaviour
 {
-    [SerializeReference] public List<BaseSharedVariable> baseSharedVariables = new List<BaseSharedVariable>();
+    [SerializeReference] public List<BaseScriptableObject> baseSharedVariables = new List<BaseScriptableObject>();
 
     private Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
-    public T GetVariable<T>(string name) where T : BaseSharedVariable
+    public T GetVariable<T>(string name) where T : BaseScriptableObject
     {
         if (dictionary.ContainsKey(name))
         {
@@ -17,7 +17,7 @@ public class Blackboard : MonoBehaviour
         return null;
     }
 
-    public void AddVariable(string name, BaseSharedVariable variable)
+    public void AddVariable(string name, BaseScriptableObject variable)
     {
         dictionary.Add(name, variable);
     }
