@@ -25,12 +25,12 @@ public class Blackboard : MonoBehaviour
     [ContextMenu("Add FloatVariable")]
     public void AddFloatVariable()
     {
-        baseSharedVariables.Add(new FloatVariable());
+        baseSharedVariables.Add(new VariableFloat());
     }
 
     [ContextMenu("Add GameObjectVariable")]
     public void AddGameObjectVariable()
     {
-        baseSharedVariables.Add(new GameObjectVariable());
+        baseSharedVariables.Add(new VariableGameObject());
     }
 }
