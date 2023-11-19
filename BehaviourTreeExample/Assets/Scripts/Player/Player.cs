@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour
 {
     public Transform Camera;
     [SerializeField] private float rotationSpeed = 180f;
