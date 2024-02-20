@@ -6,9 +6,13 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
+    [SerializeField] private GameObject PatrolNodes;
     private BTBaseNode tree;
+    private BTSequence patrol;
+    
     private NavMeshAgent agent;
     private Animator animator;
+    private Blackboard blackboard = new();
 
     private void Awake()
     {
@@ -18,7 +22,11 @@ public class Guard : MonoBehaviour
 
     private void Start()
     {
-        //Create your Behaviour Tree here!
+        blackboard.SetVariable("Agent", agent);
+        blackboard.SetVariable("Animator", animator);
+        blackboard.SetVariable("PatrolNodes", PatrolNodes);
+        patrol = new BTSequence(new BTWalkToNextNode(blackboard), new BTWait(blackboard));
+        tree = new BTSelector(patrol);
     }
 
     private void FixedUpdate()
