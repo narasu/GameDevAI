@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
+    [SerializeField] private Transform MoveTarget;
     [SerializeField] private GameObject PatrolNodes;
     [SerializeField] private GameObject[] WeaponCrates;
     private BTBaseNode tree;
@@ -26,14 +27,15 @@ public class Guard : MonoBehaviour
     {
         blackboard.SetVariable("Agent", agent);
         blackboard.SetVariable("Animator", animator);
+        blackboard.SetVariable("MoveTarget", MoveTarget);
         blackboard.SetVariable("PatrolNodes", PatrolNodes);
-        blackboard.SetVariable("WeaponCrates", WeaponCrates);
+        //blackboard.SetVariable("WeaponCrates", WeaponCrates);
         Player player = FindObjectOfType<Player>();
         blackboard.SetVariable("Player", player);
-        patrol = new BTPatrol(blackboard);
-        
+        patrol = new BTSequence(new BTFollowPath(blackboard, new BTWalkTo(blackboard)), new BTWait(1.0f));
+
         // attack = new BTSequence(new BTGetWeapon(blackboard), new BTChasePlayer(blackboard), new BTFire(blackboard));
-        tree = new BTSelector(patrol /*, attack*/);
+        tree = patrol;
     }
 
     private void FixedUpdate()
@@ -44,9 +46,9 @@ public class Guard : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.GetComponent<IPickup>() is { } pickup)
-        {
-            EventManager.Invoke(new WeaponPickedUpEvent(pickup.PickUp()));
-        }
+        // if (other.GetComponent<IPickup>() is { } pickup)
+        // {
+        //     EventManager.Invoke(new WeaponPickedUpEvent(pickup.PickUp()));
+        // }
     }
 }

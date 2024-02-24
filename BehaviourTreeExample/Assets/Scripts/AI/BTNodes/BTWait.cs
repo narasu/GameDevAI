@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class BTWait : BTBaseNode
 {
     private float waitTime;
-    private float t = .0f;
+    private float t;
     public BTWait(float _waitTime)
     {
         waitTime = _waitTime;

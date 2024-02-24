@@ -22,7 +22,7 @@ public class BTShoot : BTBaseNode
         // if player is too far away
         // return TaskStatus.Failed
         
-        if (Vector3.Distance(agent.transform.position, player.transform.position) < 5.0f)
+        if (Vector3.Distance(agent.transform.position, player.transform.position) > 5.0f)
         {
             return TaskStatus.Failed;
         }
