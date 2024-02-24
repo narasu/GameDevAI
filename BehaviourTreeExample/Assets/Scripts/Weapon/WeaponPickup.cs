@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour, IPickup
 {
-    private WeaponData weaponData;
-
-    public void Create(WeaponData _weaponData)
+    [SerializeField] private WeaponData WeaponDataAsset;
+    
+    public WeaponData PickUp()
     {
-        weaponData = _weaponData;
-    }
-
-    public object PickUp()
-    {
-        Destroy(gameObject);
-        return weaponData;
+        return WeaponDataAsset;
     }
 }

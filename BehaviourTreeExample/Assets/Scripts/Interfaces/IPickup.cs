@@ -1,4 +1,4 @@
 ﻿public interface IPickup
 {
-    object PickUp();
+    WeaponData PickUp();
 }

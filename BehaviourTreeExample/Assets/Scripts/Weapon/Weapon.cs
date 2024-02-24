@@ -1,32 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : IWeapon
+public class Weapon : MonoBehaviour
 {
-    public int Ammo { get; private set; }
-    public float Damage { get; }
+    [SerializeField] private WeaponData WeaponDataAsset;
+    private int ammo;
+    private float damage;
     private float fireRate;
 
     private Timer fireRateTimer;
 
-    public Weapon(WeaponData _weaponData)
+    private void Awake()
     {
-        Ammo = _weaponData.Ammo;
-        Damage = _weaponData.Damage;
-        fireRate = _weaponData.FireRate;
+        fireRate = WeaponDataAsset.FireRate;
+        
         fireRateTimer = new Timer(1 / fireRate);
     }
 
-    public void Fire(float _delta)
+    public void Fire()
     {
-        fireRateTimer.Run(_delta, out bool isTimerExpired);
+        fireRateTimer.Run(Time.deltaTime, out bool isTimerExpired);
         if (isTimerExpired)
         {
-            Ammo -= 1;
+            ammo -= 1;
             //EventManager.Invoke(new WeaponFiredEvent(Damage));
 
-            if (Ammo <= 0)
+            if (ammo <= 0)
             {
                 //EventManager.Invoke(new WeaponOutOfAmmoEvent());
             }
