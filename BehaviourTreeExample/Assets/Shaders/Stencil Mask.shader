@@ -1,4 +1,10 @@
-﻿Shader "Custom/Stencil Mask" {
+﻿/// Written by Sebastian Lague for his Field of View visualisation series
+/// https://www.youtube.com/watch?v=rQG9aUWarwE
+/// 
+/// This code was published under the MIT License
+/// https://github.com/SebLague/Field-of-View/
+
+Shader "Custom/Stencil Mask" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}

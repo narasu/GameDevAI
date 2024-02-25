@@ -2,6 +2,14 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Written by Sebastian Lague for his Field of View visualisation series
+/// https://www.youtube.com/watch?v=rQG9aUWarwE
+/// 
+/// This code was published under the MIT License
+/// https://github.com/SebLague/Field-of-View/
+/// </summary>
+
 [CustomEditor (typeof (FieldOfView))]
 public class FieldOfViewEditor : Editor {
 
