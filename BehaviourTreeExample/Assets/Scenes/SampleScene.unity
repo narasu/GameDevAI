@@ -660,7 +660,7 @@ MonoBehaviour:
   viewAngle: 62.82
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
@@ -925,7 +925,7 @@ GameObject:
   - component: {fileID: 1267729049}
   - component: {fileID: 1267729047}
   - component: {fileID: 1267729048}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}

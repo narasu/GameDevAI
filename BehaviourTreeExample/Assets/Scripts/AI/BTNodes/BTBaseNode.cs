@@ -9,7 +9,7 @@ public abstract class BTBaseNode
     public abstract TaskStatus Run();
 
     protected virtual void OnEnter() {}
-    protected virtual void OnExit(TaskStatus _status) {}
+    public virtual void OnExit(TaskStatus _status) {}
     
     public TaskStatus Tick()
     {

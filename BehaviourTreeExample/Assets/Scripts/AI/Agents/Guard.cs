@@ -32,11 +32,21 @@ public class Guard : MonoBehaviour
         //blackboard.SetVariable("WeaponCrates", WeaponCrates);
         Player player = FindObjectOfType<Player>();
         blackboard.SetVariable("Player", player);
+        
         patrol = new BTSequence(new BTFollowPath(blackboard), new BTWait(1.0f));
-
+        
+        
+        BTParallel p = new BTParallel(Policy.RequireAll, Policy.RequireOne, new BTGetTarget(), patrol);
+        // selector ( getWeapon, attack )
+        
+        /*
+         * condition (playerSpotted) 
+         * ? selector (getWeapon, attack)
+         * : patrol
+         */
         // getWeapon = new BTSequence(new BTFindWeapon(blackboard), new BTMoveTo(blackboard), new BTCheckWeapon(blackboard));
         // attack = new BTSequence(new BTGetTarget, new BTMoveTo, new BTShoot)
-        tree = patrol;
+        tree = p;
     }
 
     private void FixedUpdate()

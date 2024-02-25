@@ -20,7 +20,7 @@ public class BTWait : BTBaseNode
         return TaskStatus.Running;
     }
 
-    protected override void OnExit(TaskStatus _status)
+    public override void OnExit(TaskStatus _status)
     {
         t = .0f;
     }

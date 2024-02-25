@@ -31,6 +31,8 @@ public class FieldOfView : MonoBehaviour
 	public MeshFilter viewMeshFilter;
 	Mesh viewMesh;
 
+	private bool hasTarget;
+
 	void Start() {
 		viewMesh = new Mesh ();
 		viewMesh.name = "View Mesh";
@@ -64,6 +66,17 @@ public class FieldOfView : MonoBehaviour
 					visibleTargets.Add (target);
 				}
 			}
+		}
+
+		if (visibleTargets.Count > 0 && !hasTarget)
+		{
+			EventManager.Invoke(new TargetFoundEvent());
+			hasTarget = true;
+		}
+		else if (visibleTargets.Count == 0 && hasTarget)
+		{
+			EventManager.Invoke(new TargetLostEvent());
+			hasTarget = false;
 		}
 	}
 
