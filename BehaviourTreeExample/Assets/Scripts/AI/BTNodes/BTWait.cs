@@ -9,16 +9,19 @@ public class BTWait : BTBaseNode
     {
         waitTime = _waitTime;
     }
-
+    
     public override TaskStatus Run()
     {
         t += Time.fixedDeltaTime;
         if (t >= waitTime)
         {
-            t = .0f;
             return TaskStatus.Success;
         }
         return TaskStatus.Running;
     }
-    
+
+    protected override void OnExit(TaskStatus _status)
+    {
+        t = .0f;
+    }
 }

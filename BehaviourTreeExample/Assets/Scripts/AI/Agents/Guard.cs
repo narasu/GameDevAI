@@ -32,15 +32,16 @@ public class Guard : MonoBehaviour
         //blackboard.SetVariable("WeaponCrates", WeaponCrates);
         Player player = FindObjectOfType<Player>();
         blackboard.SetVariable("Player", player);
-        patrol = new BTSequence(new BTFollowPath(blackboard, new BTWalkTo(blackboard)), new BTWait(1.0f));
+        patrol = new BTSequence(new BTFollowPath(blackboard), new BTWait(1.0f));
 
-        // attack = new BTSequence(new BTGetWeapon(blackboard), new BTChasePlayer(blackboard), new BTFire(blackboard));
+        // getWeapon = new BTSequence(new BTFindWeapon(blackboard), new BTMoveTo(blackboard), new BTCheckWeapon(blackboard));
+        // attack = new BTSequence(new BTGetTarget, new BTMoveTo, new BTShoot)
         tree = patrol;
     }
 
     private void FixedUpdate()
     {
-        tree?.Run();
+        tree?.Tick();
     }
 
     private void OnTriggerEnter(Collider other)

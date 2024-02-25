@@ -8,20 +8,24 @@ public class BTFollowPath : BTDecorator
     private Transform moveTarget;
     private int currentNode = 0;
 
-    public BTFollowPath(Blackboard _blackboard, BTBaseNode _parent) : base(_parent)
+    public BTFollowPath(Blackboard _blackboard) : base(new BTMoveTo(_blackboard))
     {
         blackboard = _blackboard;
         pathNodes = _blackboard.GetVariable<GameObject>("PatrolNodes").GetComponentsInChildren<Transform>();
         moveTarget = _blackboard.GetVariable<Transform>("MoveTarget");
     }
 
-    public override TaskStatus Run()
+    protected override void OnEnter()
     {
         moveTarget.position = pathNodes[currentNode].position;
-        
-        TaskStatus parentStatus = base.Run();
+        base.OnEnter();
+    }
 
-        if (parentStatus == TaskStatus.Success)
+    public override TaskStatus Run()
+    {
+        TaskStatus childStatus = child.Tick();
+
+        if (childStatus == TaskStatus.Success)
         {
             currentNode++;
             if (currentNode == pathNodes.Length)
@@ -30,6 +34,6 @@ public class BTFollowPath : BTDecorator
             }
         }
 
-        return parentStatus;
+        return childStatus;
     }
 }

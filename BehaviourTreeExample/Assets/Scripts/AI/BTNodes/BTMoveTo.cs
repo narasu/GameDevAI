@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class BTWalkTo : BTBaseNode
+public class BTMoveTo : BTBaseNode
 {
     private Blackboard blackboard;
     private Transform moveTarget;
     private NavMeshAgent agent;
 
-    public BTWalkTo(Blackboard _blackboard)
+    public BTMoveTo(Blackboard _blackboard)
     {
         moveTarget = _blackboard.GetVariable<Transform>("MoveTarget");
         agent = _blackboard.GetVariable<NavMeshAgent>("Agent");
     }
+
 
     public override TaskStatus Run()
     {

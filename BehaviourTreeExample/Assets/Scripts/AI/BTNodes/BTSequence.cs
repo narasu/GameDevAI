@@ -11,16 +11,17 @@ public class BTSequence : BTComposite
     {
         for(; currentIndex < children.Length; currentIndex++)
         {
-            TaskStatus status = children[currentIndex].Run();
+            TaskStatus childStatus = children[currentIndex].Tick();
 
-            switch (status)
+            switch (childStatus)
             {
                 case TaskStatus.Running:
                     return TaskStatus.Running;
                 case TaskStatus.Failed:
                     currentIndex = 0;
                     return TaskStatus.Failed;
-                case TaskStatus.Success: break;
+                case TaskStatus.Success:
+                    break;
             }
         }
         currentIndex = 0;

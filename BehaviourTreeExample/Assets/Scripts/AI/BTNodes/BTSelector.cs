@@ -11,7 +11,7 @@ public class BTSelector : BTComposite
     {
         for(; currentIndex < children.Length; currentIndex++)
         {
-            TaskStatus status = children[currentIndex].Run();
+            TaskStatus status = children[currentIndex].Tick();
             
             switch(status)
             {

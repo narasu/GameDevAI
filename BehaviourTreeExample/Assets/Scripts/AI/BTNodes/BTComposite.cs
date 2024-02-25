@@ -6,7 +6,7 @@ public abstract class BTComposite : BTBaseNode
 {
     protected BTBaseNode[] children;
 
-    public BTComposite(params BTBaseNode[] _children)
+    protected BTComposite(params BTBaseNode[] _children)
     {
         children = _children;
     }

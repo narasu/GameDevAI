@@ -1,14 +1,9 @@
 ﻿public abstract class BTDecorator : BTBaseNode
 {
-    private BTBaseNode parent;
+    protected BTBaseNode child;
     
-    protected BTDecorator(BTBaseNode _parent)
+    protected BTDecorator(BTBaseNode _child)
     {
-        parent = _parent;
-    }
-    
-    public override TaskStatus Run()
-    {
-        return parent.Run();
+        child = _child;
     }
 }
