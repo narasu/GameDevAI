@@ -37,7 +37,7 @@ public class BTFindWeapon : BTBaseNode
     //     //animator.SetBool...
     // }
 
-    public override TaskStatus Run()
+    protected override TaskStatus Run()
     {
         float shortestDistance = Mathf.Infinity;
         Vector3 nearestPosition = new();

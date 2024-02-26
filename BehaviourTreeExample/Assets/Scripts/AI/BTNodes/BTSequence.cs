@@ -7,7 +7,7 @@ public class BTSequence : BTComposite
     private int currentIndex = 0;
     public BTSequence(params BTBaseNode[] _children) : base(_children) {}
 
-    public override TaskStatus Run()
+    protected override TaskStatus Run()
     {
         for(; currentIndex < children.Length; currentIndex++)
         {

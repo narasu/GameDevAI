@@ -11,8 +11,8 @@ public class BTChase : BTBaseNode
         agent = _blackboard.GetVariable<NavMeshAgent>("Agent");
         player = _blackboard.GetVariable<Player>("Player");
     }
-    
-    public override TaskStatus Run()
+
+    protected override TaskStatus Run()
     {
         if (Vector3.Distance(agent.transform.position, player.transform.position) < 5.0f)
         {

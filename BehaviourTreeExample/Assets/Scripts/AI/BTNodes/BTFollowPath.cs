@@ -21,7 +21,7 @@ public class BTFollowPath : BTDecorator
         base.OnEnter();
     }
 
-    public override TaskStatus Run()
+    protected override TaskStatus Run()
     {
         TaskStatus childStatus = child.Tick();
 

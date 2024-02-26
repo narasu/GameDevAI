@@ -36,8 +36,10 @@ public class Guard : MonoBehaviour
         patrol = new BTSequence(new BTFollowPath(blackboard), new BTWait(1.0f));
         
         
-        BTParallel p = new BTParallel(Policy.RequireAll, Policy.RequireOne, new BTGetTarget(), patrol);
+        BTParallel p = new BTParallel(Policy.RequireAll, Policy.RequireOne, new BTDetect(), patrol);
         // selector ( getWeapon, attack )
+        // (detect
+        
         
         /*
          * condition (playerSpotted) 

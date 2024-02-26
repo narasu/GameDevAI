@@ -11,8 +11,8 @@ public class BTShoot : BTBaseNode
         agent = _blackboard.GetVariable<NavMeshAgent>("Agent");
         player = _blackboard.GetVariable<Player>("Player");
     }
-    
-    public override TaskStatus Run()
+
+    protected override TaskStatus Run()
     {
         
         

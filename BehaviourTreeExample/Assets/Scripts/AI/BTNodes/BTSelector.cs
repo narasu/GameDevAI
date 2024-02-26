@@ -6,8 +6,8 @@ public class BTSelector : BTComposite
 {
     private int currentIndex = 0;
     public BTSelector(params BTBaseNode[] _children) : base(_children) {}
-    
-    public override TaskStatus Run()
+
+    protected override TaskStatus Run()
     {
         for(; currentIndex < children.Length; currentIndex++)
         {

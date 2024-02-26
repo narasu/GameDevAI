@@ -6,10 +6,14 @@ public enum TaskStatus { Success, Failed, Running, Inactive }
 public abstract class BTBaseNode
 {
     private TaskStatus status = TaskStatus.Inactive;
-    public abstract TaskStatus Run();
+    protected abstract TaskStatus Run();
 
     protected virtual void OnEnter() {}
-    public virtual void OnExit(TaskStatus _status) {}
+
+    public virtual void OnExit(TaskStatus _status)
+    {
+        status = TaskStatus.Inactive;
+    }
     
     public TaskStatus Tick()
     {

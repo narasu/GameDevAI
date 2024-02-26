@@ -9,8 +9,8 @@ public class BTWait : BTBaseNode
     {
         waitTime = _waitTime;
     }
-    
-    public override TaskStatus Run()
+
+    protected override TaskStatus Run()
     {
         t += Time.fixedDeltaTime;
         if (t >= waitTime)
@@ -23,5 +23,6 @@ public class BTWait : BTBaseNode
     public override void OnExit(TaskStatus _status)
     {
         t = .0f;
+        base.OnExit(_status);
     }
 }

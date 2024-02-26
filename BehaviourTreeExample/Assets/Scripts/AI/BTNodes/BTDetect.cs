@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class BTGetTarget : BTBaseNode
+public class BTDetect : BTBaseNode
 {
     private bool hasTarget;
     private Action<TargetFoundEvent> targetFoundEventHandler;
@@ -11,7 +11,7 @@ public class BTGetTarget : BTBaseNode
         EventManager.Subscribe(typeof(TargetFoundEvent), targetFoundEventHandler);
     }
 
-    public override TaskStatus Run()
+    protected override TaskStatus Run()
     {
         if (hasTarget)
         {

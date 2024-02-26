@@ -10,7 +10,8 @@
         onSuccess = _onSuccess;
         onFailure = _onFailure;
     }
-    public override TaskStatus Run()
+
+    protected override TaskStatus Run()
     {
         TaskStatus conditionStatus = condition.Tick();
 
@@ -30,5 +31,6 @@
         condition.OnExit(_status);
         onSuccess.OnExit(_status);
         onFailure.OnExit(_status);
+        base.OnExit(_status);
     }
 }

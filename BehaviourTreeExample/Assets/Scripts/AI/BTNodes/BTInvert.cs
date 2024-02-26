@@ -1,7 +1,8 @@
 ﻿public class BTInvert : BTDecorator
 {
     public BTInvert(BTBaseNode _child) : base(_child) { }
-    public override TaskStatus Run()
+
+    protected override TaskStatus Run()
     {
         TaskStatus childStatus = child.Tick();
 

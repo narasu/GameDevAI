@@ -14,7 +14,7 @@ public class BTMoveTo : BTBaseNode
     }
 
 
-    public override TaskStatus Run()
+    protected override TaskStatus Run()
     {
         Vector3 destination = moveTarget.position;
         agent.SetDestination(destination);

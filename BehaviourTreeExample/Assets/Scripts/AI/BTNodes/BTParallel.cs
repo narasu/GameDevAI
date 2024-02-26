@@ -9,8 +9,8 @@ public class BTParallel : BTComposite
         successPolicy = _successPolicy;
         failPolicy = _failPolicy;
     }
-    
-    public override TaskStatus Run()
+
+    protected override TaskStatus Run()
     {
         int failCount = 0;
         int successCount = 0;
@@ -59,5 +59,6 @@ public class BTParallel : BTComposite
         {
             n.OnExit(_status);
         }
+        base.OnExit(_status);
     }
 }
