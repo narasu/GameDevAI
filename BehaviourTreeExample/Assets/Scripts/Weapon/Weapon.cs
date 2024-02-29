@@ -15,13 +15,12 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         fireRate = WeaponDataAsset.FireRate;
-        
-        fireRateTimer = new Timer(1 / fireRate);
+        fireRateTimer = new Timer(1.0f);
     }
 
     public void Fire()
     {
-        fireRateTimer.Run(Time.deltaTime, out bool isTimerExpired);
+        fireRateTimer.Run(true, out bool isTimerExpired);
         if (isTimerExpired)
         {
             ammo -= 1;

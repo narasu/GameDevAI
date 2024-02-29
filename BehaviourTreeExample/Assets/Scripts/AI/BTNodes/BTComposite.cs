@@ -10,4 +10,22 @@ public abstract class BTComposite : BTBaseNode
     {
         children = _children;
     }
+
+    public override void OnExit(TaskStatus _status)
+    {
+        base.OnExit(_status);
+        foreach (BTBaseNode n in children)
+        {
+            n.OnExit(_status);
+        }
+    }
+    
+    public override void OnTerminate()
+    {
+        base.OnTerminate();
+        foreach (BTBaseNode n in children)
+        {
+            n.OnTerminate();
+        }
+    }
 }

@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class BTSequence : BTComposite
 {
-    private int currentIndex = 0;
-    public BTSequence(params BTBaseNode[] _children) : base(_children) {}
+    private int currentIndex;
+    private bool keepPosition;
+
+    public BTSequence(bool _keepPosition, params BTBaseNode[] _children) : base(_children)
+    {
+        keepPosition = _keepPosition;
+    }
 
     protected override TaskStatus Run()
     {
-        for(; currentIndex < children.Length; currentIndex++)
+        for (; currentIndex < children.Length; currentIndex++)
         {
             TaskStatus childStatus = children[currentIndex].Tick();
 
@@ -18,13 +23,22 @@ public class BTSequence : BTComposite
                 case TaskStatus.Running:
                     return TaskStatus.Running;
                 case TaskStatus.Failed:
-                    currentIndex = 0;
+                    if (!keepPosition)
+                    {
+                        currentIndex = 0;
+                    }
+
                     return TaskStatus.Failed;
                 case TaskStatus.Success:
                     break;
             }
         }
-        currentIndex = 0;
+
+        if (!keepPosition)
+        {
+            currentIndex = 0;
+        }
+
         return TaskStatus.Success;
     }
 }

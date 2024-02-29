@@ -4,27 +4,30 @@ using UnityEngine.AI;
 public class BTMoveTo : BTBaseNode
 {
     private Blackboard blackboard;
-    private Transform moveTarget;
     private NavMeshAgent agent;
 
     public BTMoveTo(Blackboard _blackboard)
     {
-        moveTarget = _blackboard.GetVariable<Transform>("MoveTarget");
-        agent = _blackboard.GetVariable<NavMeshAgent>("Agent");
+        blackboard = _blackboard;
+        agent = _blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
+    }
+
+    protected override void OnEnter(bool _debug)
+    {
+        base.OnEnter(_debug);
+        agent.SetDestination(blackboard.GetVariable<Vector3>(Strings.Destination));
     }
 
 
     protected override TaskStatus Run()
     {
-        Vector3 destination = moveTarget.position;
-        agent.SetDestination(destination);
         
         if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
         {
             return TaskStatus.Failed;
         }
         
-        if (Vector3.Distance(agent.transform.position, destination) <= agent.stoppingDistance)
+        if (Vector3.Distance(agent.transform.position, agent.destination) <= agent.stoppingDistance)
         {
             return TaskStatus.Success;
         }

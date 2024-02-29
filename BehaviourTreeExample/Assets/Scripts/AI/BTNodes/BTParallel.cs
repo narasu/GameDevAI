@@ -52,13 +52,4 @@ public class BTParallel : BTComposite
         
         return TaskStatus.Running;
     }
-
-    public override void OnExit(TaskStatus _status)
-    {
-        foreach (BTBaseNode n in children)
-        {
-            n.OnExit(_status);
-        }
-        base.OnExit(_status);
-    }
 }

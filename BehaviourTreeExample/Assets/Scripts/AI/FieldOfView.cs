@@ -56,7 +56,8 @@ public class FieldOfView : MonoBehaviour
 	void FindVisibleTargets() {
 		visibleTargets.Clear ();
 		Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
-
+		
+		
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
 			Transform target = targetsInViewRadius [i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
@@ -70,14 +71,14 @@ public class FieldOfView : MonoBehaviour
 
 		if (visibleTargets.Count > 0 && !hasTarget)
 		{
-			EventManager.Invoke(new TargetFoundEvent());
-			hasTarget = true;
+			EventManager.Invoke(new TargetFoundEvent(visibleTargets[0]));
 		}
 		else if (visibleTargets.Count == 0 && hasTarget)
 		{
 			EventManager.Invoke(new TargetLostEvent());
-			hasTarget = false;
 		}
+
+		hasTarget = visibleTargets.Count > 0;
 	}
 
 	void DrawFieldOfView() {

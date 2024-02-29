@@ -10,7 +10,7 @@ public class Timer
         length = _length;
     }
 
-    public void Run(float _delta, out bool _expired)
+    public void Run(bool _fixedDelta, out bool _expired)
     {
         if (currentTime >= length)
         {
@@ -19,7 +19,7 @@ public class Timer
             return;
         }
 
-        currentTime += _delta;
+        currentTime += _fixedDelta ? Time.fixedDeltaTime : Time.deltaTime;
         _expired = false;
     }
 }

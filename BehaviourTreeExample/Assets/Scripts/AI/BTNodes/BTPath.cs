@@ -1,24 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class BTFollowPath : BTDecorator
+public class BTPath : BTDecorator
 {
     private Transform[] pathNodes;
     private Blackboard blackboard;
     private Transform moveTarget;
     private int currentNode = 0;
 
-    public BTFollowPath(Blackboard _blackboard) : base(new BTMoveTo(_blackboard))
+    public BTPath(Blackboard _blackboard) : base(new BTMoveTo(_blackboard))
     {
         blackboard = _blackboard;
-        pathNodes = _blackboard.GetVariable<GameObject>("PatrolNodes").GetComponentsInChildren<Transform>();
-        moveTarget = _blackboard.GetVariable<Transform>("MoveTarget");
+        pathNodes = _blackboard.GetVariable<GameObject>(Strings.PatrolNodes).GetComponentsInChildren<Transform>();
     }
 
-    protected override void OnEnter()
+    protected override void OnEnter(bool _debug)
     {
-        moveTarget.position = pathNodes[currentNode].position;
-        base.OnEnter();
+        base.OnEnter(_debug);
+        blackboard.SetVariable<Vector3>(Strings.Destination, pathNodes[currentNode].position);
     }
 
     protected override TaskStatus Run()

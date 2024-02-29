@@ -8,18 +8,26 @@ public abstract class BTBaseNode
     private TaskStatus status = TaskStatus.Inactive;
     protected abstract TaskStatus Run();
 
-    protected virtual void OnEnter() {}
+    protected virtual void OnEnter(bool _debug)
+    {
+        if (_debug)
+            Debug.Log(GetType());
+    }
 
     public virtual void OnExit(TaskStatus _status)
     {
         status = TaskStatus.Inactive;
+    }
+
+    public virtual void OnTerminate()
+    {
     }
     
     public TaskStatus Tick()
     {
         if (status != TaskStatus.Running)
         {
-            OnEnter();
+            OnEnter(true);
         }   
         status = Run();
         if (status != TaskStatus.Running)

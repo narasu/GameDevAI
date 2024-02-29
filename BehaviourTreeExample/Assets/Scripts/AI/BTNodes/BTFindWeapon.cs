@@ -12,9 +12,8 @@ public class BTFindWeapon : BTBaseNode
     public BTFindWeapon(Blackboard _blackboard)
     {
         blackboard = _blackboard;
-        agent = blackboard.GetVariable<NavMeshAgent>("Agent");
-        weaponCrates = blackboard.GetVariable<GameObject[]>("WeaponCrates");
-        moveTarget = _blackboard.GetVariable<Transform>("MoveTarget");
+        agent = blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
+        weaponCrates = blackboard.GetVariable<GameObject[]>(Strings.WeaponCrates);
     }
 
     // public override void OnEnter()
