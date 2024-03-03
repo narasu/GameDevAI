@@ -1,4 +1,10 @@
 ﻿public enum Policy { RequireAll, RequireOne }
+
+/// <summary>
+/// This composite node runs multiple children in parallel.
+/// Its return value depends on the policies specified in the constructor.
+/// </summary>
+
 public class BTParallel : BTComposite
 {
     private Policy successPolicy;
@@ -40,6 +46,7 @@ public class BTParallel : BTComposite
                     break;
             }
         }
+        
         if (failPolicy == Policy.RequireAll && failCount == children.Length)
         {
             return TaskStatus.Failed;

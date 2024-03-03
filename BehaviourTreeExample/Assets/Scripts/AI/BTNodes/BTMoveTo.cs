@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// This node moves the agent to the destination specified in the blackboard.
+/// If the destination is invalid, the node will return TaskStatus.Failed.
+/// If the agent reaches the destination, the node will return TaskStatus.Success.
+/// </summary>
+
 public class BTMoveTo : BTBaseNode
 {
     private Blackboard blackboard;
@@ -12,16 +18,11 @@ public class BTMoveTo : BTBaseNode
         agent = _blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
     }
 
-    protected override void OnEnter(bool _debug)
-    {
-        base.OnEnter(_debug);
-        agent.SetDestination(blackboard.GetVariable<Vector3>(Strings.Destination));
-    }
 
 
     protected override TaskStatus Run()
     {
-        
+        agent.SetDestination(blackboard.GetVariable<Vector3>(Strings.Destination));
         if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
         {
             return TaskStatus.Failed;

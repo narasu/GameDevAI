@@ -1,4 +1,9 @@
-﻿public class BTCondition : BTBaseNode
+﻿/// <summary>
+/// This decorator node takes the result of its condition node
+/// and executes one of two child nodes based on the result.
+/// </summary>
+
+public class BTCondition : BTBaseNode
 {
     private BTBaseNode condition;
     private BTBaseNode onSuccess;
@@ -23,7 +28,7 @@
                 return onFailure.Tick();
         }
 
-        return TaskStatus.Running;
+        return conditionStatus;
     }
 
     public override void OnExit(TaskStatus _status)

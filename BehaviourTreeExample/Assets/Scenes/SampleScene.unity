@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 165667812}
   - component: {fileID: 165667811}
   - component: {fileID: 165667810}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -656,14 +656,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc740c60486d683448a02a4145ec5abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 4.62
-  viewAngle: 62.82
+  viewRadius: 10
+  viewAngle: 120
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   visibleTargets: []
   meshResolution: 1
   edgeResolveIterations: 4
@@ -1475,7 +1475,7 @@ GameObject:
   - component: {fileID: 1744050388}
   - component: {fileID: 1744050387}
   - component: {fileID: 1744050386}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1580,7 +1580,7 @@ GameObject:
   - component: {fileID: 1832966960}
   - component: {fileID: 1832966959}
   - component: {fileID: 1832966958}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,11 +1,16 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// This node listens to detection events and updates the blackboard with the detected target.
+/// If no target is detected, the node will return TaskStatus.Running.
+/// If a target is detected, the node will return TaskStatus.Success.
+/// </summary>
+
 public class BTDetect : BTBaseNode
 {
     private Blackboard blackboard;
     private bool hasTarget;
-    private Transform target;
     private Action<TargetFoundEvent> targetFoundEventHandler;
     private Action<TargetLostEvent> targetLostEventHandler;
     public BTDetect(Blackboard _blackboard)
@@ -13,14 +18,14 @@ public class BTDetect : BTBaseNode
         blackboard = _blackboard;
         
         targetFoundEventHandler = OnTargetFound;
-        targetLostEventHandler = _ => hasTarget = false;
+        targetLostEventHandler = OnTargetLost;
         EventManager.Subscribe(typeof(TargetFoundEvent), targetFoundEventHandler);
         EventManager.Subscribe(typeof(TargetLostEvent), targetLostEventHandler);
     }
 
     protected override TaskStatus Run()
     {
-        return hasTarget ? TaskStatus.Success : TaskStatus.Failed;
+        return hasTarget ? TaskStatus.Success : TaskStatus.Running;
     }
     
     public override void OnTerminate()
@@ -32,12 +37,13 @@ public class BTDetect : BTBaseNode
     private void OnTargetFound(TargetFoundEvent _event)
     {
         hasTarget = true;
+        Debug.Log(_event.Target);
         blackboard.SetVariable(Strings.Target, _event.Target);
     }
 
-    private void OnTargetLost()
+    private void OnTargetLost(TargetLostEvent _event)
     {
+        blackboard.SetVariable<Transform>(Strings.Target, null);
         hasTarget = false;
-        blackboard.SetVariable<>(Strings.Target, null);
     }
 }

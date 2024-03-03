@@ -1,4 +1,8 @@
-﻿public abstract class BTDecorator : BTBaseNode
+﻿/// <summary>
+/// Base class for any BT node with a single child that responds to the result of its child in some way.
+/// </summary>
+
+public abstract class BTDecorator : BTBaseNode
 {
     protected BTBaseNode child;
     

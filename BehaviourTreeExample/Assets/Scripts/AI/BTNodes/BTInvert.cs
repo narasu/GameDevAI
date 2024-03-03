@@ -1,4 +1,10 @@
-﻿public class BTInvert : BTDecorator
+﻿using System;
+
+/// <summary>
+/// This decorator node inverts the result of its child node.
+/// </summary>
+
+public class BTInvert : BTDecorator
 {
     public BTInvert(BTBaseNode _child) : base(_child) { }
 
@@ -12,8 +18,8 @@
                 return TaskStatus.Failed;
             case TaskStatus.Failed:
                 return TaskStatus.Success;
+            default:
+                return childStatus;
         }
-
-        return TaskStatus.Running;
     }
 }

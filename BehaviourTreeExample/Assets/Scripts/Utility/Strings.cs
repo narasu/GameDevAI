@@ -7,4 +7,5 @@
     public static string WeaponCrates = "WeaponCrates";
     public static string PatrolNodes = "PatrolNodes";
     public static string Target = "Target";
+    public static string DetectionResult = "DetectionResult";
 }

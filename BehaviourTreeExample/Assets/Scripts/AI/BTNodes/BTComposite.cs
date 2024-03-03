@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for any BT node with multiple children.
+/// </summary>
+
 public abstract class BTComposite : BTBaseNode
 {
     protected BTBaseNode[] children;
