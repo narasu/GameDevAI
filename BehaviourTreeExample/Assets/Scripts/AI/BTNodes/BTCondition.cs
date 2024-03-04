@@ -9,7 +9,7 @@ public class BTCondition : BTBaseNode
     private BTBaseNode onSuccess;
     private BTBaseNode onFailure;
 
-    public BTCondition(BTBaseNode _condition, BTBaseNode _onSuccess, BTBaseNode _onFailure)
+    public BTCondition(BTBaseNode _condition, BTBaseNode _onSuccess, BTBaseNode _onFailure) : base("condition")
     {
         condition = _condition;
         onSuccess = _onSuccess;
@@ -29,13 +29,5 @@ public class BTCondition : BTBaseNode
         }
 
         return conditionStatus;
-    }
-
-    public override void OnExit(TaskStatus _status)
-    {
-        condition.OnExit(_status);
-        onSuccess.OnExit(_status);
-        onFailure.OnExit(_status);
-        base.OnExit(_status);
     }
 }

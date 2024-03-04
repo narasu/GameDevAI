@@ -7,7 +7,7 @@ public class BTGetStatus : BTBaseNode
     private string statusString;
     private readonly bool forceWaitForSuccess;
 
-    public BTGetStatus(Blackboard _blackboard, string _statusString, bool _forceWaitForSuccess = false)
+    public BTGetStatus(Blackboard _blackboard, string _statusString, bool _forceWaitForSuccess = false) : base("GetStatus")
     {
         blackboard = _blackboard;
         statusString = _statusString;

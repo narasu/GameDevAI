@@ -11,7 +11,7 @@ public class BTPath : BTDecorator
     private Blackboard blackboard;
     private int currentNode = 0;
 
-    public BTPath(Blackboard _blackboard, BTBaseNode _child) : base(_child)
+    public BTPath(Blackboard _blackboard, BTBaseNode _child) : base("Path", _child)
     {
         blackboard = _blackboard;
         pathNodes = _blackboard.GetVariable<GameObject>(Strings.PatrolNodes).GetComponentsInChildren<Transform>();
@@ -25,6 +25,11 @@ public class BTPath : BTDecorator
 
     protected override TaskStatus Run()
     {
+        if (blackboard.GetVariable<Vector3>(Strings.Destination) != pathNodes[currentNode].position)
+        {
+            return TaskStatus.Failed;
+        }
+        
         TaskStatus childStatus = child.Tick();
 
         if (childStatus == TaskStatus.Success)

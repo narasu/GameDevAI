@@ -6,7 +6,7 @@ public class BTShoot : BTBaseNode
     private Player player;
     private NavMeshAgent agent;
 
-    public BTShoot(Blackboard _blackboard)
+    public BTShoot(Blackboard _blackboard) : base("Shoot")
     {
         agent = _blackboard.GetVariable<NavMeshAgent>("Agent");
         player = _blackboard.GetVariable<Player>("Player");

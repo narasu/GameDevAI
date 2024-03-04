@@ -8,16 +8,23 @@ using UnityEngine;
 public enum TaskStatus { Success, Failed, Running, Inactive }
 public abstract class BTBaseNode
 {
-    private TaskStatus status = TaskStatus.Inactive;
-    protected abstract TaskStatus Run();
+    protected string name;
     private bool debug;
+    private TaskStatus status = TaskStatus.Inactive;
+
+    protected BTBaseNode(string _name)
+    {
+        name = _name;
+    }
+    
+    protected abstract TaskStatus Run();
 
     protected virtual void OnEnter(bool _debug)
     {
         debug = _debug;
         if (debug)
         {
-            Debug.Log(GetType());
+            Debug.Log(name + " entered");
         }
     }
 
@@ -25,7 +32,7 @@ public abstract class BTBaseNode
     {
         if (debug)
         {
-            Debug.Log(GetType() + " " + status);
+            Debug.Log(name + " " + status);
         }
     }
 

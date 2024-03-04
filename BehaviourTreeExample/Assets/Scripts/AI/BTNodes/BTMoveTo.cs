@@ -12,7 +12,7 @@ public class BTMoveTo : BTBaseNode
     private Blackboard blackboard;
     private NavMeshAgent agent;
 
-    public BTMoveTo(Blackboard _blackboard)
+    public BTMoveTo(Blackboard _blackboard) : base("MoveTo")
     {
         blackboard = _blackboard;
         agent = _blackboard.GetVariable<NavMeshAgent>(Strings.Agent);

@@ -10,18 +10,9 @@ public abstract class BTComposite : BTBaseNode
 {
     protected BTBaseNode[] children;
 
-    protected BTComposite(params BTBaseNode[] _children)
+    protected BTComposite(string _name, params BTBaseNode[] _children) : base(_name)
     {
         children = _children;
-    }
-
-    public override void OnExit(TaskStatus _status)
-    {
-        base.OnExit(_status);
-        foreach (BTBaseNode n in children)
-        {
-            n.OnExit(_status);
-        }
     }
     
     public override void OnTerminate()

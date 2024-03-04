@@ -8,7 +8,7 @@ public class BTSetDestinationOnTarget : BTBaseNode
 {
     private Blackboard blackboard;
 
-    public BTSetDestinationOnTarget(Blackboard _blackboard)
+    public BTSetDestinationOnTarget(Blackboard _blackboard) : base("SetDestinationOnTarget")
     {
         blackboard = _blackboard;
     }

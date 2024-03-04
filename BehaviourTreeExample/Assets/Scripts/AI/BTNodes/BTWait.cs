@@ -5,9 +5,15 @@ public class BTWait : BTBaseNode
 {
     private float waitTime;
     private float t;
-    public BTWait(float _waitTime)
+    public BTWait(float _waitTime) : base("Wait")
     {
         waitTime = _waitTime;
+    }
+
+    protected override void OnEnter(bool _debug)
+    {
+        base.OnEnter(_debug);
+        t = .0f;
     }
 
     protected override TaskStatus Run()
@@ -20,9 +26,4 @@ public class BTWait : BTBaseNode
         return TaskStatus.Running;
     }
 
-    public override void OnExit(TaskStatus _status)
-    {
-        t = .0f;
-        base.OnExit(_status);
-    }
 }

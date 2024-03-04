@@ -7,9 +7,10 @@ public class BTSequence : BTComposite
     private int currentIndex;
     private bool keepPosition;
 
-    public BTSequence(bool _keepPosition, params BTBaseNode[] _children) : base(_children)
+    public BTSequence(string _name, bool _keepPosition, params BTBaseNode[] _children) : base(_name, _children)
     {
         keepPosition = _keepPosition;
+        name = _name;
     }
 
     protected override TaskStatus Run()
@@ -27,7 +28,6 @@ public class BTSequence : BTComposite
                     {
                         currentIndex = 0;
                     }
-
                     return TaskStatus.Failed;
                 case TaskStatus.Success:
                     break;
@@ -41,4 +41,5 @@ public class BTSequence : BTComposite
 
         return TaskStatus.Success;
     }
+    
 }

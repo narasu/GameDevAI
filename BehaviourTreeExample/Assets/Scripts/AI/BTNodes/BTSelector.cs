@@ -5,22 +5,26 @@ using UnityEngine;
 public class BTSelector : BTComposite
 {
     private int currentIndex = 0;
-    public BTSelector(params BTBaseNode[] _children) : base(_children) {}
+
+    public BTSelector(string _name, params BTBaseNode[] _children) : base(_name, _children)
+    {
+    }
 
     protected override TaskStatus Run()
     {
         for(; currentIndex < children.Length; currentIndex++)
         {
-            TaskStatus status = children[currentIndex].Tick();
+            TaskStatus childStatus = children[currentIndex].Tick();
             
-            switch(status)
+            switch(childStatus)
             {
                 case TaskStatus.Running:
                     return TaskStatus.Running;
                 case TaskStatus.Success:
                     currentIndex = 0;
                     return TaskStatus.Success;
-                case TaskStatus.Failed: break;
+                case TaskStatus.Failed: 
+                    break;
             }
         }
         currentIndex = 0;

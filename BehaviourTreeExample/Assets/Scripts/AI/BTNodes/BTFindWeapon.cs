@@ -9,7 +9,7 @@ public class BTFindWeapon : BTBaseNode
     private Transform moveTarget;
     private GameObject[] weaponCrates;
     
-    public BTFindWeapon(Blackboard _blackboard)
+    public BTFindWeapon(Blackboard _blackboard) : base("FindWeapon")
     {
         blackboard = _blackboard;
         agent = blackboard.GetVariable<NavMeshAgent>(Strings.Agent);

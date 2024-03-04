@@ -6,7 +6,7 @@
 
 public class BTInvert : BTDecorator
 {
-    public BTInvert(BTBaseNode _child) : base(_child) { }
+    public BTInvert(BTBaseNode _child) : base("Invert", _child) { }
 
     protected override TaskStatus Run()
     {

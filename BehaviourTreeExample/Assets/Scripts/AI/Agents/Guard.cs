@@ -32,36 +32,33 @@ public class Guard : MonoBehaviour
 
         var moveTo = new BTMoveTo(blackboard);
 
-        var detect = new BTSequence(false,
+        var detect = new BTSequence("DetectSequence", false,
             new BTCacheStatus(blackboard, Strings.DetectionResult, new BTDetect(blackboard)),
             new BTSetDestinationOnTarget(blackboard));
         
-        var patrol = new BTParallel(Policy.RequireAll, Policy.RequireOne,
+        var patrol = new BTParallel("patrol", Policy.RequireAll, Policy.RequireOne,
             new BTInvert(new BTGetStatus(blackboard, Strings.DetectionResult, true)),
-            new BTSequence(false,
+            new BTSequence("path sequence", false,
                 new BTPath(blackboard, moveTo),
-                new BTWait(2.0f))
+                new BTWait(5.0f))
         );
-
         
-        var chase = new BTSequence(false,
+        var chase = new BTInvert(new BTSequence("chase", false,
             moveTo,
-            new BTGetStatus(blackboard, Strings.DetectionResult, false));
-
+            new BTSelector("ChaseGetStatusSelector",
+                new BTGetStatus(blackboard, Strings.DetectionResult, false),
+                new BTWait(5.0f)
+            )
+        ));
         
-        var detectionSelector = new BTSelector(
+        var detectionSelector = new BTSelector("detectionSelector",
             patrol,
             chase
         );
 
-        tree = new BTParallel(Policy.RequireAll, Policy.RequireAll,
+        tree = new BTParallel("tree",Policy.RequireAll, Policy.RequireAll,
             detect,
             detectionSelector);
-
-        //BTCondition btDetected = new(detect, attack, patrol);
-        //tree = new BTParallel(Policy.RequireAll, Policy.RequireAll, detect, btDetected);
-
-
 
         /*
          * parallel {

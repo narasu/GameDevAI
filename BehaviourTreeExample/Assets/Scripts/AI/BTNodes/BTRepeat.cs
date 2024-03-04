@@ -1,6 +1,6 @@
 ﻿public class BTRepeat : BTDecorator
 {
-    public BTRepeat(BTBaseNode _child) : base(_child) { }
+    public BTRepeat(BTBaseNode _child) : base("Repeat", _child) { }
     protected override TaskStatus Run()
     {
         TaskStatus childStatus = child.Tick();

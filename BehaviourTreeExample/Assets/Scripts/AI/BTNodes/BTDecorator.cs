@@ -6,15 +6,9 @@ public abstract class BTDecorator : BTBaseNode
 {
     protected BTBaseNode child;
     
-    protected BTDecorator(BTBaseNode _child)
+    protected BTDecorator(string _name, BTBaseNode _child) : base (_name)
     {
         child = _child;
-    }
-
-    public override void OnExit(TaskStatus _status)
-    {
-        base.OnExit(_status);
-        child.OnExit(_status);
     }
 
     public override void OnTerminate()

@@ -13,7 +13,7 @@ public class BTDetect : BTBaseNode
     private bool hasTarget;
     private Action<TargetFoundEvent> targetFoundEventHandler;
     private Action<TargetLostEvent> targetLostEventHandler;
-    public BTDetect(Blackboard _blackboard)
+    public BTDetect(Blackboard _blackboard) : base("Detect")
     {
         blackboard = _blackboard;
         
