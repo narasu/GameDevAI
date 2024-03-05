@@ -46,7 +46,7 @@ public class Guard : MonoBehaviour
         var chase = new BTSelector("Chase Selector",
             new BTSequence("Chase", false,
                 moveTo,
-                new BTTimeout(2.0f, new BTGetStatus(blackboard, Strings.DetectionResult)))
+                new BTTimeout(2.0f, TaskStatus.Failed, new BTGetStatus(blackboard, Strings.DetectionResult)))
         );
         
         var attack = new BTShoot(blackboard);

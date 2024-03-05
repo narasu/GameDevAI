@@ -3,11 +3,13 @@
 public class BTTimeout : BTDecorator
 {
     private readonly float timeoutTime;
+    private readonly TaskStatus onTimeout;
     private float currentTime = .0f;
     
-    public BTTimeout(float _timeoutTime, BTBaseNode _child) : base("Timeout", _child)
+    public BTTimeout(float _timeoutTime, TaskStatus _onTimeout, BTBaseNode _child) : base("Timeout", _child)
     {
         timeoutTime = _timeoutTime;
+        onTimeout = _onTimeout;
     }
 
     protected override void OnEnter(bool _debug)
@@ -27,7 +29,7 @@ public class BTTimeout : BTDecorator
             currentTime += Time.fixedDeltaTime;
             if (currentTime >= timeoutTime)
             {
-                return TaskStatus.Failed;
+                return onTimeout;
             }
 
             return TaskStatus.Running;
