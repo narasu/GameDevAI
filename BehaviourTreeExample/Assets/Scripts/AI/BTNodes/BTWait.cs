@@ -3,8 +3,10 @@ using UnityEngine.AI;
 
 public class BTWait : BTBaseNode
 {
-    private float waitTime;
+    private readonly float waitTime;
+    
     private float t;
+    
     public BTWait(float _waitTime) : base("Wait")
     {
         waitTime = _waitTime;
@@ -25,5 +27,4 @@ public class BTWait : BTBaseNode
         }
         return TaskStatus.Running;
     }
-
 }

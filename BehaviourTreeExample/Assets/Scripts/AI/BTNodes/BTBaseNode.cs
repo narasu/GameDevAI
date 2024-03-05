@@ -38,6 +38,11 @@ public abstract class BTBaseNode
 
     public virtual void OnTerminate()
     {
+        if (debug)
+        {
+            Debug.Log(name + " terminated");
+            
+        }
         status = TaskStatus.Inactive;
     }
     

@@ -2,18 +2,19 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BTFindWeapon : BTBaseNode
+public class BTFindNearest : BTBaseNode
 {
-    private Blackboard blackboard;
-    private NavMeshAgent agent;
-    private Transform moveTarget;
-    private GameObject[] weaponCrates;
+    private readonly Blackboard blackboard;
+    private readonly NavMeshAgent agent;
+    private readonly GameObject[] objectArray;
     
-    public BTFindWeapon(Blackboard _blackboard) : base("FindWeapon")
+    private Transform moveTarget;
+    
+    public BTFindNearest(Blackboard _blackboard, string _arrayString) : base("FindNearest")
     {
         blackboard = _blackboard;
         agent = blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
-        weaponCrates = blackboard.GetVariable<GameObject[]>(Strings.WeaponCrates);
+        objectArray = blackboard.GetVariable<GameObject[]>(_arrayString);
     }
 
     // public override void OnEnter()
@@ -40,7 +41,7 @@ public class BTFindWeapon : BTBaseNode
     {
         float shortestDistance = Mathf.Infinity;
         Vector3 nearestPosition = new();
-        foreach (GameObject crate in weaponCrates)
+        foreach (GameObject crate in objectArray)
         {
             float dist = Vector3.Distance(agent.transform.position, crate.transform.position);
             if (dist < shortestDistance)

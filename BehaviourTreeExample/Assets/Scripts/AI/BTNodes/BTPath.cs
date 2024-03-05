@@ -7,8 +7,9 @@ using UnityEngine.AI;
 
 public class BTPath : BTDecorator
 {
-    private Transform[] pathNodes;
-    private Blackboard blackboard;
+    private readonly Transform[] pathNodes;
+    private readonly Blackboard blackboard;
+    
     private int currentNode = 0;
 
     public BTPath(Blackboard _blackboard, BTBaseNode _child) : base("Path", _child)

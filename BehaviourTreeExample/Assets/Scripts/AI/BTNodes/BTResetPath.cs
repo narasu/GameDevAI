@@ -1,11 +1,11 @@
 ﻿using UnityEngine.AI;
 
-public class BTResetDestination : BTBaseNode
+public class BTResetPath : BTBaseNode
 {
     private readonly Blackboard blackboard;
-    private NavMeshAgent agent;
+    private readonly NavMeshAgent agent;
 
-    public BTResetDestination(Blackboard _blackboard) : base("ResetDestination")
+    public BTResetPath(Blackboard _blackboard) : base("ResetPath")
     {
         blackboard = _blackboard;
         agent = blackboard.GetVariable<NavMeshAgent>(Strings.Agent);

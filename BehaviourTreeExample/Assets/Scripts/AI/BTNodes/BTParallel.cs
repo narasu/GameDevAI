@@ -7,8 +7,8 @@
 
 public class BTParallel : BTComposite
 {
-    private Policy successPolicy;
-    private Policy failPolicy;
+    private readonly Policy successPolicy;
+    private readonly Policy failPolicy;
 
     public BTParallel(string _name, Policy _successPolicy, Policy _failPolicy, params BTBaseNode[] _children) : base(_name, _children)
     {
@@ -36,6 +36,10 @@ public class BTParallel : BTComposite
                     failCount++;
                     if (failPolicy == Policy.RequireOne)
                     {
+                        foreach (BTBaseNode n in children)
+                        {
+                            n.OnTerminate();
+                        }
                         return TaskStatus.Failed;
                     }
                     break;
@@ -44,6 +48,10 @@ public class BTParallel : BTComposite
                     successCount++;
                     if (successPolicy == Policy.RequireOne)
                     {
+                        foreach (BTBaseNode n in children)
+                        {
+                            n.OnTerminate();
+                        }
                         return TaskStatus.Success;
                     }
                     break;
@@ -62,4 +70,6 @@ public class BTParallel : BTComposite
         
         return TaskStatus.Running;
     }
+    
+    
 }

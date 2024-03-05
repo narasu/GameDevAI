@@ -9,8 +9,8 @@ using UnityEngine.AI;
 
 public class BTMoveTo : BTBaseNode
 {
-    private Blackboard blackboard;
-    private NavMeshAgent agent;
+    private readonly Blackboard blackboard;
+    private readonly NavMeshAgent agent;
 
     public BTMoveTo(Blackboard _blackboard) : base("MoveTo")
     {

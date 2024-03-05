@@ -5,9 +5,9 @@
 
 public class BTCondition : BTBaseNode
 {
-    private BTBaseNode condition;
-    private BTBaseNode onSuccess;
-    private BTBaseNode onFailure;
+    private readonly BTBaseNode condition;
+    private readonly BTBaseNode onSuccess;
+    private readonly BTBaseNode onFailure;
 
     public BTCondition(BTBaseNode _condition, BTBaseNode _onSuccess, BTBaseNode _onFailure) : base("condition")
     {

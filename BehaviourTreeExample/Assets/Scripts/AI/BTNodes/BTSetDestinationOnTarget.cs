@@ -6,7 +6,7 @@ using UnityEngine.AI;
 /// </summary>
 public class BTSetDestinationOnTarget : BTBaseNode
 {
-    private Blackboard blackboard;
+    private readonly Blackboard blackboard;
 
     public BTSetDestinationOnTarget(Blackboard _blackboard) : base("SetDestinationOnTarget")
     {

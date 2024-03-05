@@ -28,7 +28,7 @@ public class Guard : MonoBehaviour
         blackboard.SetVariable(Strings.Agent, agent);
         blackboard.SetVariable(Strings.Animator, animator);
         blackboard.SetVariable(Strings.PatrolNodes, PatrolNodes);
-        //blackboard.SetVariable("WeaponCrates", WeaponCrates);
+        blackboard.SetVariable("WeaponCrates", WeaponCrates);
 
         var moveTo = new BTMoveTo(blackboard);
 
@@ -36,49 +36,31 @@ public class Guard : MonoBehaviour
             new BTCacheStatus(blackboard, Strings.DetectionResult, new BTDetect(blackboard)),
             new BTSetDestinationOnTarget(blackboard));
         
-        var patrol = new BTParallel("patrol", Policy.RequireAll, Policy.RequireOne,
-            new BTInvert(new BTGetStatus(blackboard, Strings.DetectionResult, true)),
+        var patrol = new BTParallel("Patrol", Policy.RequireAll, Policy.RequireOne,
+            new BTInvert(new BTGetStatus(blackboard, Strings.DetectionResult)),
             new BTSequence("path sequence", false,
                 new BTPath(blackboard, moveTo),
                 new BTWait(5.0f))
         );
         
-        var chase = new BTInvert(new BTSequence("chase", false,
-            moveTo,
-            new BTSelector("ChaseGetStatusSelector",
-                new BTGetStatus(blackboard, Strings.DetectionResult, false),
-                new BTWait(5.0f)
-            )
-        ));
+        var chase = new BTSelector("Chase Selector",
+            new BTSequence("Chase", false,
+                moveTo,
+                new BTTimeout(2.0f, new BTGetStatus(blackboard, Strings.DetectionResult)))
+        );
         
-        var detectionSelector = new BTSelector("detectionSelector",
+        var attack = new BTShoot(blackboard);
+        
+        
+        var detectionSelector = new BTSelector("DetectionSelector",
             patrol,
             chase
         );
 
-        tree = new BTParallel("tree",Policy.RequireAll, Policy.RequireAll,
+        tree = new BTParallel("Tree",Policy.RequireAll, Policy.RequireAll,
             detect,
             detectionSelector);
 
-        /*
-         * parallel {
-         *
-         *   detect   -   if target is lost, should there be a delay before this returns failed?
-         *
-         *   condition : detect {
-         *
-         *     on fail: patrol  -  should this return failed on detection? should it even be aware of that?
-         *
-         *     on success: sequence {
-         *       get weapon  -  can store a bool so the guard won't have to search for a weapon every detection event
-         *       chase  -  returns success if close enough
-         *       shoot  -  returns failed if too far
-         *     }
-         *
-         *   }
-         *
-         * }
-         */
     }
 
     private void FixedUpdate()

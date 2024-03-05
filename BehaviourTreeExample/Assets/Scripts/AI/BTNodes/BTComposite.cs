@@ -8,7 +8,7 @@ using UnityEngine;
 
 public abstract class BTComposite : BTBaseNode
 {
-    protected BTBaseNode[] children;
+    protected readonly BTBaseNode[] children;
 
     protected BTComposite(string _name, params BTBaseNode[] _children) : base(_name)
     {

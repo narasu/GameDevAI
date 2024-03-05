@@ -9,10 +9,12 @@ using UnityEngine;
 
 public class BTDetect : BTBaseNode
 {
-    private Blackboard blackboard;
+    private readonly Blackboard blackboard;
+    private readonly Action<TargetFoundEvent> targetFoundEventHandler;
+    private readonly Action<TargetLostEvent> targetLostEventHandler;
+    
     private bool hasTarget;
-    private Action<TargetFoundEvent> targetFoundEventHandler;
-    private Action<TargetLostEvent> targetLostEventHandler;
+    
     public BTDetect(Blackboard _blackboard) : base("Detect")
     {
         blackboard = _blackboard;

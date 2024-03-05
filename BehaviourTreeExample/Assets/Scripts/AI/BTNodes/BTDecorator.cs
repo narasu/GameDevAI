@@ -4,7 +4,7 @@
 
 public abstract class BTDecorator : BTBaseNode
 {
-    protected BTBaseNode child;
+    protected readonly BTBaseNode child;
     
     protected BTDecorator(string _name, BTBaseNode _child) : base (_name)
     {

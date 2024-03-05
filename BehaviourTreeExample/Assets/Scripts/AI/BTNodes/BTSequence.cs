@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BTSequence : BTComposite
 {
+    private readonly bool keepPosition;
+    
     private int currentIndex;
-    private bool keepPosition;
 
     public BTSequence(string _name, bool _keepPosition, params BTBaseNode[] _children) : base(_name, _children)
     {
