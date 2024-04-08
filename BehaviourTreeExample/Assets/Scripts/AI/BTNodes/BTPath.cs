@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
@@ -7,26 +9,26 @@ using UnityEngine.AI;
 
 public class BTPath : BTDecorator
 {
-    private readonly Transform[] pathNodes;
     private readonly Blackboard blackboard;
+    private PathNode[] pathNodes;
     
     private int currentNode = 0;
 
     public BTPath(Blackboard _blackboard, BTBaseNode _child) : base("Path", _child)
     {
         blackboard = _blackboard;
-        pathNodes = _blackboard.GetVariable<GameObject>(Strings.PatrolNodes).GetComponentsInChildren<Transform>();
+        pathNodes = _blackboard.GetVariable<PathNode[]>(Strings.PatrolNodes);
     }
 
     protected override void OnEnter(bool _debug)
     {
         base.OnEnter(_debug);
-        blackboard.SetVariable(Strings.Destination, pathNodes[currentNode].position);
+        blackboard.SetVariable(Strings.Destination, pathNodes[currentNode].Position);
     }
 
     protected override TaskStatus Run()
     {
-        if (blackboard.GetVariable<Vector3>(Strings.Destination) != pathNodes[currentNode].position)
+        if (blackboard.GetVariable<Vector3>(Strings.Destination) != pathNodes[currentNode].Position)
         {
             return TaskStatus.Failed;
         }

@@ -10,40 +10,41 @@ using UnityEngine;
 public class BTDetect : BTBaseNode
 {
     private readonly Blackboard blackboard;
-    private readonly Action<TargetFoundEvent> targetFoundEventHandler;
-    private readonly Action<TargetLostEvent> targetLostEventHandler;
+    private ViewCone viewCone;
     
     private bool hasTarget;
-    
+   
+
     public BTDetect(Blackboard _blackboard) : base("Detect")
     {
         blackboard = _blackboard;
-        
-        targetFoundEventHandler = OnTargetFound;
-        targetLostEventHandler = OnTargetLost;
-        EventManager.Subscribe(typeof(TargetFoundEvent), targetFoundEventHandler);
-        EventManager.Subscribe(typeof(TargetLostEvent), targetLostEventHandler);
+        viewCone = _blackboard.GetVariable<ViewCone>(Strings.ViewCone);
+
+        viewCone.OnTargetFound += OnTargetFound;
+        viewCone.OnTargetLost += OnTargetLost;
+    }
+   
+    public override void OnTerminate()
+    {
+        base.OnTerminate();
+        viewCone.OnTargetFound -= OnTargetFound;
+        viewCone.OnTargetLost -= OnTargetLost;
     }
 
     protected override TaskStatus Run()
     {
         return hasTarget ? TaskStatus.Success : TaskStatus.Running;
     }
-    
-    public override void OnTerminate()
-    {
-        EventManager.Unsubscribe(typeof(TargetFoundEvent), targetFoundEventHandler);
-        EventManager.Unsubscribe(typeof(TargetLostEvent), targetLostEventHandler);
-    }
 
     private void OnTargetFound(TargetFoundEvent _event)
     {
         hasTarget = true;
+       
         Debug.Log(_event.Target);
         blackboard.SetVariable(Strings.Target, _event.Target);
     }
-
-    private void OnTargetLost(TargetLostEvent _event)
+   
+    private void OnTargetLost()
     {
         blackboard.SetVariable<Transform>(Strings.Target, null);
         hasTarget = false;
