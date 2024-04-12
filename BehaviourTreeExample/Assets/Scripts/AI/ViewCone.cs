@@ -33,9 +33,7 @@ public class ViewCone : MonoBehaviour
     public event TargetLostEventHandler OnTargetLost;
 
     private bool hasTarget;
-    private Transform currentTarget;
     private Coroutine findTargets;
-    private Coroutine targetLostDelay;
 
     private Mesh viewMesh;
     private int stepCount;
@@ -65,12 +63,6 @@ public class ViewCone : MonoBehaviour
         if (findTargets != null)
         {
             StopCoroutine(findTargets);
-        }
-
-        if (targetLostDelay != null)
-        {
-            StopCoroutine(targetLostDelay);
-            targetLostDelay = null;
         }
 
         OnTargetLost?.Invoke();
@@ -112,12 +104,6 @@ public class ViewCone : MonoBehaviour
 
         if (visibleTargets.Count > 0 && !hasTarget)
         {
-            if (targetLostDelay != null)
-            {
-                StopCoroutine(targetLostDelay);
-                targetLostDelay = null;
-            }
-
             OnTargetFound?.Invoke(visibleTargets[0]);
         }
         else if (visibleTargets.Count == 0 && hasTarget)

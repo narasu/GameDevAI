@@ -78,8 +78,11 @@ public class Guard : MonoBehaviour, IWeaponUser
                     new BTSetDestinationOnTarget(blackboard),
                     new BTSetDestinationOnLastSeen(blackboard)
                 ),
-                new BTSelector("ShootOrMoveTo", new BTShoot(blackboard), new BTAnimate(animator, a_IsRunning, moveTo))
-                ,
+                new BTStatusSelector("ShootOrMoveTo", new BTIsInRange(blackboard, 8.0f),
+                    new BTSequence("Shoot", new BTResetPath(blackboard),new BTShoot(blackboard)),
+                    
+                    new BTAnimate(animator, a_IsRunning, moveTo)
+                ),
                 new BTTimeout(1.0f, TaskStatus.Failed, new BTGetStatus(blackboard, Strings.DetectionResult))
             )
         );
