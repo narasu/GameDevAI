@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
-/// This node sets the destination on the blackboard to the position of the target, if there is one.
-/// If there is no target, the node will return TaskStatus.Failed.
+/// This node sets the destination on the blackboard to the position of the target, if it exists.
 /// </summary>
 public class BTSetDestinationOnTarget : BTBaseNode
 {

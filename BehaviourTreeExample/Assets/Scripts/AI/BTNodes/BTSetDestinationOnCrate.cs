@@ -2,30 +2,33 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BTFindCrate : BTBaseNode
+public class BTSetDestinationOnCrate : BTBaseNode
 {
     private readonly Blackboard blackboard;
     private readonly NavMeshAgent agent;
-    private readonly GameObject[] objectArray;
-    
-    public BTFindCrate(Blackboard _blackboard, string _arrayString) : base("FindNearest")
+    private readonly WeaponPickup[] crates;
+
+
+    public BTSetDestinationOnCrate(Blackboard _blackboard) : base("SetDestinationOnCrate")
     {
         blackboard = _blackboard;
         agent = blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
-        objectArray = blackboard.GetVariable<GameObject[]>(_arrayString);
+        ServiceLocator.TryLocate(Strings.WeaponCrates, out object pickups);
+        crates = pickups as WeaponPickup[];
     }
+
 
     protected override TaskStatus Run()
     {
         float shortestDistance = float.MaxValue;
         Vector3 nearestPosition = new();
-        foreach (GameObject obj in objectArray)
+        foreach (WeaponPickup c in crates)
         {
-            float dist = Vector3.Distance(agent.transform.position, obj.transform.position);
+            float dist = Vector3.Distance(agent.transform.position, c.transform.position);
             if (dist < shortestDistance)
             {
                 shortestDistance = dist;
-                nearestPosition = obj.transform.position;
+                nearestPosition = c.transform.position;
             }
         }
 
@@ -37,10 +40,4 @@ public class BTFindCrate : BTBaseNode
         Debug.Log("No crates found");
         return TaskStatus.Failed;
     }
-
-    // public override void OnExit()
-    // {
-    //     EventManager.Unsubscribe(typeof(WeaponPickedUpEvent), pickupEventHandler);
-    //     weaponGrabbed = false;
-    // }
 }

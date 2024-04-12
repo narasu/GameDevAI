@@ -70,6 +70,4 @@ public class BTParallel : BTComposite
         
         return TaskStatus.Running;
     }
-    
-    
 }

@@ -8,6 +8,7 @@
     public static string PatrolNodes = "PatrolNodes"; // PathNode[]
     public static string PatrolNodeIndex = "PatrolPosition"; // int
     public static string Target = "Target"; // Transform
+    public static string LastSeenPosition = "LastSeenPosition"; // Vector3
     public static string DetectionResult = "DetectionResult"; // TaskStatus
     public static string ViewCone = "ViewCone"; // ViewCone
     public static string ViewTransform = "ViewTransform"; // Transform
@@ -15,4 +16,5 @@
 	public static string AgentState = "AgentState"; // AgentState
     public static string PatrolSpeed = "PatrolSpeed"; // float
     public static string ChaseSpeed = "ChaseSpeed"; // float
+    public static string HasWeapon = "HasWeapon"; // TaskStatus
 }

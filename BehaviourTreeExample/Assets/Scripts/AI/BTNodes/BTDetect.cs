@@ -13,7 +13,8 @@ public class BTDetect : BTBaseNode
     private ViewCone viewCone;
     
     private bool hasTarget;
-   
+    private Transform target;
+
 
     public BTDetect(Blackboard _blackboard) : base("Detect")
     {
@@ -23,7 +24,8 @@ public class BTDetect : BTBaseNode
         viewCone.OnTargetFound += OnTargetFound;
         viewCone.OnTargetLost += OnTargetLost;
     }
-   
+
+
     public override void OnTerminate()
     {
         base.OnTerminate();
@@ -31,22 +33,30 @@ public class BTDetect : BTBaseNode
         viewCone.OnTargetLost -= OnTargetLost;
     }
 
+
     protected override TaskStatus Run()
     {
+        if (hasTarget)
+        {
+            blackboard.SetVariable(Strings.LastSeenPosition, target.position);
+        }
+        
         return hasTarget ? TaskStatus.Success : TaskStatus.Running;
     }
 
-    private void OnTargetFound(TargetFoundEvent _event)
+
+    private void OnTargetFound(Transform _target)
     {
+        target = _target;
         hasTarget = true;
-       
-        Debug.Log(_event.Target);
-        blackboard.SetVariable(Strings.Target, _event.Target);
+        blackboard.SetVariable(Strings.Target, target);
     }
-   
+
+
     private void OnTargetLost()
     {
-        blackboard.SetVariable<Transform>(Strings.Target, null);
+        target = null;
         hasTarget = false;
+        blackboard.SetVariable<Transform>(Strings.Target, null);
     }
 }

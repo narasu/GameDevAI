@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class Guard : MonoBehaviour
+public class Guard : MonoBehaviour, IWeaponUser
 {
     public Transform ViewTransform;
     public List<PathNode> PathNodes;
@@ -15,7 +15,6 @@ public class Guard : MonoBehaviour
     private PathNode[] patrolNodes;
     public float PatrolSpeed = 2.0f;
     public float ChaseSpeed = 4.0f;
-    private BTBaseNode tree;
     
     private int a_IsWalking = Animator.StringToHash("IsWalking");
     private int a_IsRunning = Animator.StringToHash("IsRunning");
@@ -24,9 +23,11 @@ public class Guard : MonoBehaviour
     private Animator animator;
     private ViewCone viewCone;
     private Blackboard blackboard = new();
+    private BTBaseNode tree;
     
     private void Awake()
     {
+
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         viewCone = GetComponentInChildren<ViewCone>();
@@ -41,46 +42,51 @@ public class Guard : MonoBehaviour
         blackboard.SetVariable(Strings.PatrolSpeed, PatrolSpeed);
         blackboard.SetVariable(Strings.ChaseSpeed, ChaseSpeed);
         blackboard.SetVariable(Strings.WeaponCrates, FindObjectsOfType<WeaponPickup>());
-        blackboard.SetVariable(Strings.AgentState, AgentState.PATROL);
     }
 
     private void Start()
     {
-        var moveTo = new BTMoveTo(blackboard);
+        BTMoveTo moveTo = new(blackboard);
 
-        var detect = new BTSequence("DetectSequence", false,
-            new BTCacheStatus(blackboard, Strings.DetectionResult, new BTDetect(blackboard)),
-            new BTSetDestinationOnTarget(blackboard));
+        BTCacheStatus detect = new(blackboard, Strings.DetectionResult, new BTDetect(blackboard));
         
-        var path = new BTSequence("Path",
+        BTSequence path = new("Path",
             new BTSetSpeed(blackboard, PatrolSpeed),
             new BTSetDestinationOnPath(blackboard), 
             new BTAnimate(animator, a_IsWalking, moveTo),
-            new BTStopOnPath(blackboard));
+            new BTStopOnPath(blackboard)
+        );
         
-        var patrol = new BTParallel("Patrol", Policy.RequireAll, Policy.RequireOne,
+        BTParallel patrol = new("Patrol", Policy.RequireAll, Policy.RequireOne,
             new BTInvert(new BTGetStatus(blackboard, Strings.DetectionResult)),
             path
         );
         
-        var chase = new BTSelector("Chase Selector",
-            new BTSequence("Chase", false,
-                new BTSetSpeed(blackboard, ChaseSpeed),
-                new BTAnimate(animator, a_IsRunning, moveTo),
-                new BTTimeout(2.0f, TaskStatus.Failed, new BTGetStatus(blackboard, Strings.DetectionResult)))
+        BTSequence onDetected = new ("OnDetected", false,
+
+            new BTSetSpeed(blackboard, ChaseSpeed),
+
+            new BTSelector("GetWeapon",
+                new BTCheckBool(blackboard, Strings.HasWeapon),
+                new BTInvert(new BTSetDestinationOnCrate(blackboard)),
+                new BTAnimate(animator, a_IsRunning, moveTo)
+            ),
+            
+            new BTParallel("Attack", Policy.RequireAll, Policy.RequireOne, 
+                
+                new BTSelector("Chase", 
+                    new BTSetDestinationOnTarget(blackboard),
+                    new BTSetDestinationOnLastSeen(blackboard)
+                ),
+                new BTSelector("ShootOrMoveTo", new BTShoot(blackboard), new BTAnimate(animator, a_IsRunning, moveTo))
+                ,
+                new BTTimeout(1.0f, TaskStatus.Failed, new BTGetStatus(blackboard, Strings.DetectionResult))
+            )
         );
         
-        var attack = new BTShoot(blackboard);
-        
-        /*
-         * find crate
-         * moveTo (grab weapon)
-         * chase (modified so agent stops some distance away from player)
-         * shoot
-         */
         var detectionSelector = new BTSelector("DetectionSelector",
             patrol,
-            chase
+            onDetected
         );
 
         tree = new BTParallel("Tree",Policy.RequireAll, Policy.RequireAll,
@@ -122,12 +128,8 @@ public class Guard : MonoBehaviour
         patrolNodes = result.ToArray();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void PickUp()
     {
-        
-        // if (other.GetComponent<IPickup>() is { } pickup)
-        // {
-        //     EventManager.Invoke(new WeaponPickedUpEvent(pickup.PickUp()));
-        // }
+        blackboard.SetVariable(Strings.HasWeapon, true);
     }
 }

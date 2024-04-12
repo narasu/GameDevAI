@@ -30,6 +30,7 @@ public class Weapon : MonoBehaviour
             {
                 //EventManager.Invoke(new WeaponOutOfAmmoEvent());
             }
+            
         }
     }
 }

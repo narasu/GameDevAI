@@ -10,4 +10,8 @@ public class WeaponPickup : MonoBehaviour, IPickup
     {
         return WeaponDataAsset;
     }
+
+    private void OnTriggerEnter(Collider other) {
+        other.GetComponent<IWeaponUser>()?.PickUp();
+    }
 }

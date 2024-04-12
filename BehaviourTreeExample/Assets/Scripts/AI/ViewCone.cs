@@ -10,7 +10,7 @@ using UnityEngine;
 /// This code was published under the MIT License
 /// https://github.com/SebLague/Field-of-View/
 /// </summary>
-public delegate void TargetFoundEventHandler(TargetFoundEvent _event);
+public delegate void TargetFoundEventHandler(Transform _target);
 
 public delegate void TargetLostEventHandler();
 
@@ -118,21 +118,16 @@ public class ViewCone : MonoBehaviour
                 targetLostDelay = null;
             }
 
-            OnTargetFound?.Invoke(new TargetFoundEvent(visibleTargets[0]));
+            OnTargetFound?.Invoke(visibleTargets[0]);
         }
         else if (visibleTargets.Count == 0 && hasTarget)
         {
-            targetLostDelay = StartCoroutine(TargetLostDelayedInvoke(1.5f));
+            OnTargetLost?.Invoke();
         }
 
         hasTarget = visibleTargets.Count > 0;
     }
 
-    private IEnumerator TargetLostDelayedInvoke(float _time)
-    {
-        yield return new WaitForSeconds(_time);
-        OnTargetLost?.Invoke();
-    }
 
     #endregion
 

@@ -36,4 +36,3 @@ public class BTStopOnPath : BTBaseNode
         return TaskStatus.Running;
     }
 }
-
