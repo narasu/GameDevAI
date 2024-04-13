@@ -48,7 +48,7 @@ public class Guard : MonoBehaviour, IWeaponUser
     {
         BTMoveTo moveTo = new(blackboard);
 
-        BTCacheStatus detect = new(blackboard, Strings.DetectionResult, new BTDetect(blackboard));
+        BTCacheStatus detect = new(blackboard, Strings.DetectionResult, new BTDetect(blackboard, Strings.Player));
         
         BTSequence path = new("Path",
             new BTSetSpeed(blackboard, PatrolSpeed),
@@ -75,11 +75,11 @@ public class Guard : MonoBehaviour, IWeaponUser
             new BTParallel("Attack", Policy.RequireAll, Policy.RequireOne, 
                 
                 new BTSelector("Chase", 
-                    new BTSetDestinationOnTarget(blackboard),
+                    new BTSetDestinationOnTarget(blackboard, Strings.Player),
                     new BTSetDestinationOnLastSeen(blackboard)
                 ),
-                new BTStatusSelector("ShootOrMoveTo", new BTIsInRange(blackboard, 8.0f),
-                    new BTSequence("Shoot", new BTResetPath(blackboard),new BTShoot(blackboard)),
+                new BTStatusSelector("ShootOrMoveTo", new BTIsInRange(blackboard, Strings.Player, 8.0f),
+                    new BTSequence("Shoot", new BTResetPath(blackboard),new BTShoot(blackboard, Strings.Player, 1)),
                     
                     new BTAnimate(animator, a_IsRunning, moveTo)
                 ),

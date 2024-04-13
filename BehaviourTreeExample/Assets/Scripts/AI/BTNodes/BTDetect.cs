@@ -10,15 +10,17 @@ using UnityEngine;
 public class BTDetect : BTBaseNode
 {
     private readonly Blackboard blackboard;
+    private readonly string targetString;
     private ViewCone viewCone;
     
     private bool hasTarget;
     private Transform target;
 
 
-    public BTDetect(Blackboard _blackboard) : base("Detect")
+    public BTDetect(Blackboard _blackboard, string _targetString) : base("Detect")
     {
         blackboard = _blackboard;
+        targetString = _targetString;
         viewCone = _blackboard.GetVariable<ViewCone>(Strings.ViewCone);
 
         viewCone.OnTargetFound += OnTargetFound;
@@ -49,7 +51,7 @@ public class BTDetect : BTBaseNode
     {
         target = _target;
         hasTarget = true;
-        blackboard.SetVariable(Strings.Target, target);
+        blackboard.SetVariable(targetString, target);
     }
 
 
@@ -57,6 +59,6 @@ public class BTDetect : BTBaseNode
     {
         target = null;
         hasTarget = false;
-        blackboard.SetVariable<Transform>(Strings.Target, null);
+        blackboard.SetVariable<Transform>(targetString, null);
     }
 }

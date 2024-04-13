@@ -6,15 +6,17 @@ using UnityEngine.AI;
 public class BTSetDestinationOnTarget : BTBaseNode
 {
     private readonly Blackboard blackboard;
+    private readonly string targetString;
 
-    public BTSetDestinationOnTarget(Blackboard _blackboard) : base("SetDestinationOnTarget")
+    public BTSetDestinationOnTarget(Blackboard _blackboard, string _targetString) : base("SetDestinationOnTarget")
     {
         blackboard = _blackboard;
+        targetString = _targetString;
     }
     
     protected override TaskStatus Run()
     {
-        Transform target = blackboard.GetVariable<Transform>(Strings.Target);
+        Transform target = blackboard.GetVariable<Transform>(targetString);
         
         if (target == null)
         {
