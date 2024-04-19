@@ -16,4 +16,5 @@
     public static string PatrolSpeed = "PatrolSpeed"; // float
     public static string ChaseSpeed = "ChaseSpeed"; // float
     public static string HasWeapon = "HasWeapon"; // TaskStatus
+    public static string BombPrefab = "BombPrefab"; // GameObject
 }

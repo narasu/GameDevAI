@@ -3,12 +3,12 @@ using UnityEngine.AI;
 /// <summary>
 /// This node sets the destination on the blackboard to the position of the target, if it exists.
 /// </summary>
-public class BTSetDestinationOnTarget : BTBaseNode
+public class BTSetDestinationOnTransform : BTBaseNode
 {
     private readonly Blackboard blackboard;
     private readonly string targetString;
 
-    public BTSetDestinationOnTarget(Blackboard _blackboard, string _targetString) : base("SetDestinationOnTarget")
+    public BTSetDestinationOnTransform(Blackboard _blackboard, string _targetString) : base("SetDestinationOnTarget")
     {
         blackboard = _blackboard;
         targetString = _targetString;

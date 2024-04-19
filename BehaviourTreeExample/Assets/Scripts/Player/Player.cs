@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public delegate void DetectedEventHandler(Transform _enemy);
+
+public class Player : MonoBehaviour, IDetectable
 {
     public Transform Camera;
     [SerializeField] private float rotationSpeed = 180f;
@@ -15,6 +17,9 @@ public class Player : MonoBehaviour
     private float hor = 0;
     private Vector3 moveDirection;
     private Collider mainCollider;
+
+    public event DetectedEventHandler OnDetected;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -103,5 +108,10 @@ public class Player : MonoBehaviour
         {
             animator.CrossFade(animationName, fadeTime);
         }
+    }
+
+    public void GetDetected(Transform _enemy)
+    {
+        OnDetected?.Invoke(_enemy);
     }
 }

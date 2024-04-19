@@ -1700,6 +1700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794f0ee09c67de7498fb2d6bcc43074d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1267729046}
+  BombPrefab: {fileID: 2534439216536013122, guid: e8c1c3fa7569223498fc51f43b70079c,
+    type: 3}
 --- !u!1 &1868206819
 GameObject:
   m_ObjectHideFlags: 0

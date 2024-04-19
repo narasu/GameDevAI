@@ -73,9 +73,9 @@ public class Guard : MonoBehaviour, IWeaponUser
             ),
             
             new BTParallel("Attack", Policy.RequireAll, Policy.RequireOne, 
-                
+                //new BTRaiseAlarm(blackboard),
                 new BTSelector("Chase", 
-                    new BTSetDestinationOnTarget(blackboard, Strings.Player),
+                    new BTSetDestinationOnTransform(blackboard, Strings.Player),
                     new BTSetDestinationOnLastSeen(blackboard)
                 ),
                 new BTStatusSelector("ShootOrMoveTo", new BTIsInRange(blackboard, Strings.Player, 8.0f),

@@ -15,22 +15,18 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         fireRate = WeaponDataAsset.FireRate;
-        fireRateTimer = new Timer(1.0f);
+        fireRateTimer = new Timer(fireRate);
     }
 
-    public void Fire()
+
+    // call this method from Update / FixedUpdate
+    public bool Fire()
     {
         fireRateTimer.Run(true, out bool isTimerExpired);
         if (isTimerExpired)
         {
-            ammo -= 1;
-            //EventManager.Invoke(new WeaponFiredEvent(Damage));
-
-            if (ammo <= 0)
-            {
-                //EventManager.Invoke(new WeaponOutOfAmmoEvent());
-            }
-            
+            return true;
         }
+        return false;
     }
 }
