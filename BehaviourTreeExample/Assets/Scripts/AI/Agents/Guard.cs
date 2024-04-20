@@ -34,6 +34,7 @@ public class Guard : MonoBehaviour, IWeaponUser
 
         InitializePath();
         
+        blackboard.SetVariable(Strings.UserTransform, transform);
         blackboard.SetVariable(Strings.Agent, agent);
         blackboard.SetVariable(Strings.Animator, animator);
         blackboard.SetVariable(Strings.PatrolNodes, patrolNodes);
@@ -41,11 +42,17 @@ public class Guard : MonoBehaviour, IWeaponUser
         blackboard.SetVariable(Strings.ViewTransform, ViewTransform);
         blackboard.SetVariable(Strings.PatrolSpeed, PatrolSpeed);
         blackboard.SetVariable(Strings.ChaseSpeed, ChaseSpeed);
-        blackboard.SetVariable(Strings.WeaponCrates, FindObjectsOfType<WeaponPickup>());
+        
     }
 
     private void Start()
     {
+        if (!ServiceLocator.TryLocate(Strings.WeaponCrates, out object weaponCrates)) 
+        {
+            Debug.LogError("Could not find WeaponCrates");
+        }
+        blackboard.SetVariable(Strings.WeaponCrates, weaponCrates as Transform[]);
+
         BTMoveTo moveTo = new(blackboard);
 
         BTCacheStatus detect = new(blackboard, Strings.DetectionResult, new BTDetect(blackboard, Strings.Player));
@@ -62,14 +69,19 @@ public class Guard : MonoBehaviour, IWeaponUser
             path
         );
         
+        
+
         BTSequence onDetected = new ("OnDetected", false,
 
             new BTSetSpeed(blackboard, ChaseSpeed),
 
             new BTSelector("GetWeapon",
                 new BTCheckBool(blackboard, Strings.HasWeapon),
-                new BTInvert(new BTSetDestinationOnCrate(blackboard)),
-                new BTAnimate(animator, a_IsRunning, moveTo)
+                new BTSequence("GotoCrate", 
+                    new BTFindNearest(blackboard, Strings.WeaponCrates, Strings.NearestCrate),
+                    new BTSetDestinationOnTransform(blackboard, Strings.NearestCrate),
+                    new BTAnimate(animator, a_IsRunning, moveTo)
+                )
             ),
             
             new BTParallel("Attack", Policy.RequireAll, Policy.RequireOne, 

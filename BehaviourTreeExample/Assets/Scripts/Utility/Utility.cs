@@ -16,4 +16,14 @@ public static class Utility
         EditorApplication.QueuePlayerLoopUpdate();
     }
 #endif
+
+    public static void ProvideTransformArrayFromType<T>() where T : Component
+    {
+        T[] _array = Object.FindObjectsOfType<T>();
+        Transform[] transforms = new Transform[_array.Length];
+        for (int i = 0; i < _array.Length; i++) {
+            transforms[i] = _array[i].transform;
+        }
+        ServiceLocator.Provide(Strings.WeaponCrates, transforms);
+    }
 }

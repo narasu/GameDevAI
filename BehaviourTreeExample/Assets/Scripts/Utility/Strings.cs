@@ -1,12 +1,14 @@
 ﻿public static class Strings
 {
+    public static string UserTransform = "UserTransform"; // Transform
     public static string Destination = "Destination"; // Vector3
     public static string Player = "Player"; // Transform
     public static string Agent = "Agent"; // NavMeshAgent
     public static string Animator = "Animator"; // Animator
-    public static string WeaponCrates = "WeaponCrates"; // GameObject[]
+    public static string WeaponCrates = "WeaponCrates"; // Transform[]
+    public static string NearestCrate = "NearestCrate"; // Transform
     public static string PatrolNodes = "PatrolNodes"; // PathNode[]
-    public static string PatrolNodeIndex = "PatrolPosition"; // int
+    public static string PatrolNodeIndex = "PatrolNodeIndex"; // int
     public static string Target = "Target"; // Transform
     public static string LastSeenPosition = "LastSeenPosition"; // Vector3
     public static string DetectionResult = "DetectionResult"; // TaskStatus
