@@ -25,8 +25,15 @@ public class Rogue : MonoBehaviour
 
     private void Start()
     {
-        
-        Debug.Log(FindObjectOfType<Player>().transform);
+        if (!ServiceLocator.TryLocate(Strings.CoverPoints, out object coverPoints))
+        {
+            Debug.LogError("Could not find CoverPoints");
+        }
+        else
+        {
+            blackboard.SetVariable(Strings.CoverPoints, coverPoints as Transform[]);
+        }
+
         blackboard.SetVariable(Strings.Player, FindObjectOfType<Player>().transform);
         
         

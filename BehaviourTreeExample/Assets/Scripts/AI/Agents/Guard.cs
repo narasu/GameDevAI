@@ -51,7 +51,10 @@ public class Guard : MonoBehaviour, IWeaponUser
         {
             Debug.LogError("Could not find WeaponCrates");
         }
-        blackboard.SetVariable(Strings.WeaponCrates, weaponCrates as Transform[]);
+        else
+        {
+            blackboard.SetVariable(Strings.WeaponCrates, weaponCrates as Transform[]);
+        }
 
         BTMoveTo moveTo = new(blackboard);
 
