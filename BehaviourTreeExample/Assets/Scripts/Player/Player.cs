@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public delegate void DetectedEventHandler(Transform _enemy);
+public delegate void EscapedEventHandler();
 
 public class Player : MonoBehaviour, IDetectable
 {
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour, IDetectable
     private Collider mainCollider;
 
     public event DetectedEventHandler OnDetected;
+    public event EscapedEventHandler OnEscaped;
 
     // Start is called before the first frame update
     void Start()
@@ -110,8 +112,13 @@ public class Player : MonoBehaviour, IDetectable
         }
     }
 
-    public void GetDetected(Transform _enemy)
+    public void CallDetected(Transform _enemy)
     {
         OnDetected?.Invoke(_enemy);
+    }
+
+    public void CallEscaped()
+    {
+        OnEscaped?.Invoke();
     }
 }

@@ -17,13 +17,13 @@ public static class Utility
     }
 #endif
 
-    public static void ProvideTransformArrayFromType<T>() where T : Component
+    public static void ProvideTransformArrayFromType<T>(string arrayName) where T : Component
     {
         T[] _array = Object.FindObjectsOfType<T>();
         Transform[] transforms = new Transform[_array.Length];
         for (int i = 0; i < _array.Length; i++) {
             transforms[i] = _array[i].transform;
         }
-        ServiceLocator.Provide(Strings.WeaponCrates, transforms);
+        ServiceLocator.Provide(arrayName, transforms);
     }
 }

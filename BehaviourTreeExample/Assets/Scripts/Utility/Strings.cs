@@ -20,5 +20,5 @@
     public static string HasWeapon = "HasWeapon"; // TaskStatus
     public static string BombPrefab = "BombPrefab"; // GameObject
     public static string CoverPoints = "CoverPoints"; // Transform[]
-    public static string NearestCover = "NearestCover"; // Transform
+    public static string OptimalCover = "NearestCover"; // Transform
 }

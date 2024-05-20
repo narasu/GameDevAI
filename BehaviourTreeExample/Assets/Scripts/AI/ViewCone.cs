@@ -105,6 +105,7 @@ public class ViewCone : MonoBehaviour
         if (visibleTargets.Count > 0 && !hasTarget)
         {
             OnTargetFound?.Invoke(visibleTargets[0]);
+            visibleTargets[0].GetComponent<IDetectable>()?.CallDetected(transform.parent);
         }
         else if (visibleTargets.Count == 0 && hasTarget)
         {

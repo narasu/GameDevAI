@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private void Awake()
     {
-        Utility.ProvideTransformArrayFromType<WeaponPickup>();
-        Utility.ProvideTransformArrayFromType<Cover>();
+        Utility.ProvideTransformArrayFromType<WeaponPickup>(Strings.WeaponCrates);
+        ServiceLocator.Provide(Strings.CoverPoints, FindObjectsOfType<Cover>());
     }
 }

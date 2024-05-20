@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// This node listens to detection events and updates the blackboard with the detected target.
@@ -11,6 +12,7 @@ public class BTDetect : BTBaseNode
 {
     private readonly Blackboard blackboard;
     private readonly string targetString;
+    private readonly NavMeshAgent agent;
     private ViewCone viewCone;
     
     private bool hasTarget;
@@ -20,6 +22,7 @@ public class BTDetect : BTBaseNode
     public BTDetect(Blackboard _blackboard, string _targetString) : base("Detect")
     {
         blackboard = _blackboard;
+        agent = blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
         targetString = _targetString;
         viewCone = _blackboard.GetVariable<ViewCone>(Strings.ViewCone);
 
@@ -52,11 +55,13 @@ public class BTDetect : BTBaseNode
         target = _target;
         hasTarget = true;
         blackboard.SetVariable(targetString, target);
+        target.GetComponent<IDetectable>()?.CallDetected(agent.transform);
     }
 
 
     private void OnTargetLost()
     {
+        
         target = null;
         hasTarget = false;
         blackboard.SetVariable<Transform>(targetString, null);

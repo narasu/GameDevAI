@@ -29,9 +29,9 @@ public class Rogue : MonoBehaviour
         {
             Debug.LogError("Could not find CoverPoints");
         }
-        else
+        else if (coverPoints is Cover[])
         {
-            blackboard.SetVariable(Strings.CoverPoints, coverPoints as Transform[]);
+            blackboard.SetVariable(Strings.CoverPoints, coverPoints);
         }
 
         blackboard.SetVariable(Strings.Player, FindObjectOfType<Player>().transform);
@@ -42,9 +42,12 @@ public class Rogue : MonoBehaviour
             new BTMoveTo(blackboard)
         );
 
-        BTSequence onDetected = new("OnDetected", new BTThrowSmoke(blackboard, Strings.Target));
+        BTSequence onDetected = new("OnDetected", 
+            new BTFindOptimalCover(blackboard),
+            new BTMoveTo(blackboard),
+            new BTThrowSmoke(blackboard, Strings.Target));
 
-        tree = new BTSelector("", new BTThrowSmoke(blackboard, Strings.Target), followPlayer);
+        tree = new BTSelector("", onDetected, followPlayer);
     }
 
     private void FixedUpdate()
@@ -55,16 +58,23 @@ public class Rogue : MonoBehaviour
     private void OnEnable() 
     {
         player.OnDetected += OnPlayerDetected;
+        player.OnEscaped += OnPlayerEscaped;
     }
 
     private void OnDisable() 
     {
         player.OnDetected -= OnPlayerDetected;
+        player.OnEscaped -= OnPlayerEscaped;
     }
 
     private void OnPlayerDetected(Transform _enemy)
     {
         blackboard.SetVariable(Strings.Target, _enemy);
+    }
+
+    private void OnPlayerEscaped()
+    {
+        blackboard.SetVariable<Transform>(Strings.Target, null);
     }
 
 }

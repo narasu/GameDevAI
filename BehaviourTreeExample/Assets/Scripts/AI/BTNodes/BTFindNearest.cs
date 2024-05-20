@@ -38,7 +38,7 @@ public class BTFindNearest : BTBaseNode
             return TaskStatus.Success;
         }
         
-        Debug.Log("No crates found");
+        Debug.Log("No objects found");
         return TaskStatus.Failed;
     }
 }
