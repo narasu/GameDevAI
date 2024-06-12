@@ -12,15 +12,15 @@ public class BTTimeout : BTDecorator
         onTimeout = _onTimeout;
     }
 
-    protected override void OnEnter(bool _debug)
+    protected override void OnEnter()
     {
-        base.OnEnter(_debug);
+        base.OnEnter();
         currentTime = .0f;
     }
 
     protected override TaskStatus Run()
     {
-        TaskStatus childStatus = child.Tick();
+        TaskStatus childStatus = child.Tick(debug);
 
         if (childStatus == TaskStatus.Success) return TaskStatus.Success;
 

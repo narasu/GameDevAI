@@ -11,15 +11,15 @@ public class BTAnimate : BTDecorator
         animHash = _animHash;
     }
 
-    protected override void OnEnter(bool _debug)
+    protected override void OnEnter()
     {
-        base.OnEnter(_debug);
+        base.OnEnter();
         animator.SetBool(animHash, true);
     }
 
     protected override TaskStatus Run()
     {
-        TaskStatus childStatus = child.Tick();
+        TaskStatus childStatus = child.Tick(debug);
         if (childStatus != TaskStatus.Running)
         {
             animator.SetBool(animHash, false);

@@ -15,7 +15,7 @@ public class BTCacheStatus : BTDecorator
     }
     protected override TaskStatus Run()
     {
-        TaskStatus childStatus = child.Tick();
+        TaskStatus childStatus = child.Tick(debug);
         blackboard.SetVariable<TaskStatus>(statusString, childStatus);
         
         return childStatus;

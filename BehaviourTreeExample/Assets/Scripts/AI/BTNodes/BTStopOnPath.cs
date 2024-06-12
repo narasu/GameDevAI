@@ -18,9 +18,9 @@ public class BTStopOnPath : BTBaseNode
         agent = _blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
     }
 
-    protected override void OnEnter(bool _debug)
+    protected override void OnEnter()
     {
-        base.OnEnter(_debug);
+        base.OnEnter();
         patrolNodeIndex = blackboard.GetVariable<int>(Strings.PatrolNodeIndex);
         waitTime = patrolNodes[patrolNodeIndex].WaitTime;
         t = .0f;

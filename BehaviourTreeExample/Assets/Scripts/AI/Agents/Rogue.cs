@@ -9,6 +9,7 @@ public class Rogue : MonoBehaviour
 {
     [SerializeField] private Player player;
     [SerializeField] private GameObject BombPrefab;
+    [SerializeField] private Transform throwOrigin;
     private BTBaseNode tree;
     private NavMeshAgent agent;
     private Animator animator;
@@ -37,7 +38,8 @@ public class Rogue : MonoBehaviour
         blackboard.SetVariable(Strings.Player, FindObjectOfType<Player>().transform);
         
         
-        BTParallel followPlayer = new("FollowPlayer", Policy.RequireAll, Policy.RequireAll, 
+        BTParallel followPlayer = new("FollowPlayer", Policy.RequireAll, Policy.RequireOne, true,
+            new BTCheckBool(blackboard, Strings.IsDetected, TaskStatus.Failed, TaskStatus.Running),
             new BTSetDestinationOnTransform(blackboard, Strings.Player), 
             new BTMoveTo(blackboard)
         );
@@ -45,14 +47,14 @@ public class Rogue : MonoBehaviour
         BTSequence onDetected = new("OnDetected", 
             new BTFindOptimalCover(blackboard),
             new BTMoveTo(blackboard),
-            new BTThrowSmoke(blackboard, Strings.Target));
+            new BTThrowSmoke(blackboard, throwOrigin, Strings.Target));
 
-        tree = new BTSelector("", onDetected, followPlayer);
+        tree = new BTSelector("", followPlayer, onDetected);
     }
 
     private void FixedUpdate()
     {
-        tree?.Tick();
+        tree?.Tick(false);
     }
 
     private void OnEnable() 
@@ -69,7 +71,9 @@ public class Rogue : MonoBehaviour
 
     private void OnPlayerDetected(Transform _enemy)
     {
+        blackboard.SetVariable(Strings.IsDetected, true);
         blackboard.SetVariable(Strings.Target, _enemy);
+        Debug.Log("Player Detected");
     }
 
     private void OnPlayerEscaped()

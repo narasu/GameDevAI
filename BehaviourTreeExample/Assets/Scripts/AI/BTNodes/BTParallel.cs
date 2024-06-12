@@ -9,13 +9,20 @@ public class BTParallel : BTComposite
 {
     private readonly Policy successPolicy;
     private readonly Policy failPolicy;
+    private readonly bool terminateChildren;
 
     public BTParallel(string _name, Policy _successPolicy, Policy _failPolicy, params BTBaseNode[] _children) : base(_name, _children)
     {
-        name = _name;
         successPolicy = _successPolicy;
         failPolicy = _failPolicy;
-        
+        terminateChildren = false;
+    }
+
+    public BTParallel(string _name, Policy _successPolicy, Policy _failPolicy, bool _terminateChildren, params BTBaseNode[] _children) : base(_name, _children)
+    {
+        successPolicy = _successPolicy;
+        failPolicy = _failPolicy;
+        terminateChildren = _terminateChildren;
     }
 
     protected override TaskStatus Run()
@@ -26,7 +33,7 @@ public class BTParallel : BTComposite
         for (int i = 0; i < children.Length; i++)
         {
             BTBaseNode node = children[i];
-            TaskStatus childStatus = node.Tick();
+            TaskStatus childStatus = node.Tick(debug);
 
             switch (childStatus)
             {
@@ -36,9 +43,12 @@ public class BTParallel : BTComposite
                     failCount++;
                     if (failPolicy == Policy.RequireOne)
                     {
-                        foreach (BTBaseNode n in children)
+                        if (terminateChildren)
                         {
-                            n.OnTerminate();
+                            foreach (BTBaseNode n in children)
+                            {
+                                n.OnTerminate();
+                            }
                         }
                         return TaskStatus.Failed;
                     }
@@ -48,9 +58,12 @@ public class BTParallel : BTComposite
                     successCount++;
                     if (successPolicy == Policy.RequireOne)
                     {
-                        foreach (BTBaseNode n in children)
+                        if (terminateChildren)
                         {
-                            n.OnTerminate();
+                            foreach (BTBaseNode n in children)
+                            {
+                                n.OnTerminate();
+                            }
                         }
                         return TaskStatus.Success;
                     }
@@ -60,14 +73,30 @@ public class BTParallel : BTComposite
 
         if (failPolicy == Policy.RequireAll && failCount == children.Length)
         {
+            if (terminateChildren)
+            {
+                foreach (BTBaseNode n in children)
+                {
+                    n.OnTerminate();
+                }
+            }
             return TaskStatus.Failed;
         }
 
         if (successPolicy == Policy.RequireAll && successCount == children.Length)
         {
+            if (terminateChildren)
+            {
+                foreach (BTBaseNode n in children)
+                {
+                    n.OnTerminate();
+                }
+            }
             return TaskStatus.Success;
         }
         
         return TaskStatus.Running;
     }
+    
+    
 }

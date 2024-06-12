@@ -61,7 +61,6 @@ public class BTDetect : BTBaseNode
 
     private void OnTargetLost()
     {
-        
         target = null;
         hasTarget = false;
         blackboard.SetVariable<Transform>(targetString, null);

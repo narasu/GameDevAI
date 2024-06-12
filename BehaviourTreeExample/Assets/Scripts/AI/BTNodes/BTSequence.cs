@@ -23,7 +23,7 @@ public class BTSequence : BTComposite
     {
         for (; currentIndex < children.Length; currentIndex++)
         {
-            TaskStatus childStatus = children[currentIndex].Tick();
+            TaskStatus childStatus = children[currentIndex].Tick(debug);
 
             switch (childStatus)
             {
@@ -47,5 +47,5 @@ public class BTSequence : BTComposite
 
         return TaskStatus.Success;
     }
-    
+
 }

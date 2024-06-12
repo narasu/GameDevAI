@@ -13,9 +13,9 @@ public class BTSetSpeed : BTBaseNode
         agent = blackboard.GetVariable<NavMeshAgent>(Strings.Agent);
     }
     
-    protected override void OnEnter(bool _debug)
+    protected override void OnEnter()
     {
-        base.OnEnter(_debug);
+        base.OnEnter();
         agent.speed = speed;
     }
     

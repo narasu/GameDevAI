@@ -10,7 +10,7 @@ public class BTInvert : BTDecorator
 
     protected override TaskStatus Run()
     {
-        TaskStatus childStatus = child.Tick();
+        TaskStatus childStatus = child.Tick(debug);
 
         switch (childStatus)
         {

@@ -14,7 +14,7 @@ public class BTSelector : BTComposite
     {
         for(; currentIndex < children.Length; currentIndex++)
         {
-            TaskStatus childStatus = children[currentIndex].Tick();
+            TaskStatus childStatus = children[currentIndex].Tick(debug);
             
             switch(childStatus)
             {
@@ -30,4 +30,5 @@ public class BTSelector : BTComposite
         currentIndex = 0;
         return TaskStatus.Failed;
     }
+    
 }

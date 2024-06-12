@@ -88,12 +88,11 @@ public class Guard : MonoBehaviour, IWeaponUser
             ),
             
             new BTParallel("Attack", Policy.RequireAll, Policy.RequireOne, 
-                //new BTRaiseAlarm(blackboard),
                 new BTSelector("Chase", 
                     new BTSetDestinationOnTransform(blackboard, Strings.Player),
                     new BTSetDestinationOnLastSeen(blackboard)
                 ),
-                new BTStatusSelector("ShootOrMoveTo", new BTIsInRange(blackboard, Strings.Player, 8.0f),
+                new BTCondition("ShootOrMoveTo", new BTIsInRange(blackboard, Strings.Player, 8.0f),
                     new BTSequence("Shoot", new BTResetPath(blackboard),new BTShoot(blackboard, Strings.Player, 1)),
                     
                     new BTAnimate(animator, a_IsRunning, moveTo)
@@ -115,7 +114,7 @@ public class Guard : MonoBehaviour, IWeaponUser
 
     private void FixedUpdate()
     {
-        tree?.Tick();
+        tree?.Tick(false);
     }
 
     private void OnDestroy()

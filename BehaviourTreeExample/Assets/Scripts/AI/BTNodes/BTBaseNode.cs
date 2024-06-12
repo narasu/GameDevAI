@@ -10,7 +10,12 @@ public abstract class BTBaseNode
 {
     
     protected string name;
-    private bool debug;
+
+    public bool DebugTree
+    {
+        set => debug = value;
+    }
+    protected bool debug;
     private TaskStatus status = TaskStatus.Inactive;
 
     protected BTBaseNode(string _name)
@@ -20,9 +25,8 @@ public abstract class BTBaseNode
     
     protected abstract TaskStatus Run();
 
-    protected virtual void OnEnter(bool _debug)
+    protected virtual void OnEnter()
     {
-        debug = _debug;
         if (debug)
         {
             Debug.Log(name + " entered");
@@ -47,11 +51,15 @@ public abstract class BTBaseNode
         status = TaskStatus.Inactive;
     }
     
-    public TaskStatus Tick()
+    public TaskStatus Tick(bool _debug)
     {
+        if (_debug)
+        {
+            debug = true;
+        }
         if (status != TaskStatus.Running)
         {
-            OnEnter(false);
+            OnEnter();
         }   
         status = Run();
         if (status != TaskStatus.Running)

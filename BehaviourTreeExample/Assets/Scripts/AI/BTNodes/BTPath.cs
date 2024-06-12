@@ -20,9 +20,9 @@ public class BTPath : BTDecorator
         pathNodes = _blackboard.GetVariable<PathNode[]>(Strings.PatrolNodes);
     }
 
-    protected override void OnEnter(bool _debug)
+    protected override void OnEnter()
     {
-        base.OnEnter(_debug);
+        base.OnEnter();
         blackboard.SetVariable(Strings.Destination, pathNodes[currentNode].Position);
     }
 
@@ -33,7 +33,7 @@ public class BTPath : BTDecorator
             return TaskStatus.Failed;
         }
         
-        TaskStatus childStatus = child.Tick();
+        TaskStatus childStatus = child.Tick(debug);
 
         if (childStatus == TaskStatus.Success)
         {
