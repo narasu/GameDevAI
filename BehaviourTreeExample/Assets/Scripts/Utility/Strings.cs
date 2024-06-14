@@ -22,4 +22,6 @@
     public static string CoverPoints = "CoverPoints"; // Transform[]
     public static string OptimalCover = "NearestCover"; // Transform
     public static string IsDetected = "IsDetected"; // bool
+    public static string BlindTime = "BlindTime"; // float
+    public static string IsBlinded = "IsBlinded"; // bool
 }

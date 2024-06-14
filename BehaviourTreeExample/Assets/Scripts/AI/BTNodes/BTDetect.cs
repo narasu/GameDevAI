@@ -17,8 +17,7 @@ public class BTDetect : BTBaseNode
     
     private bool hasTarget;
     private Transform target;
-
-
+    
     public BTDetect(Blackboard _blackboard, string _targetString) : base("Detect")
     {
         blackboard = _blackboard;
@@ -46,7 +45,7 @@ public class BTDetect : BTBaseNode
             blackboard.SetVariable(Strings.LastSeenPosition, target.position);
         }
         
-        return hasTarget ? TaskStatus.Success : TaskStatus.Running;
+        return hasTarget ? TaskStatus.Success : TaskStatus.Failed;
     }
 
 

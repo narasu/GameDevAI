@@ -73,7 +73,6 @@ public class Rogue : MonoBehaviour
     {
         blackboard.SetVariable(Strings.IsDetected, true);
         blackboard.SetVariable(Strings.Target, _enemy);
-        Debug.Log("Player Detected");
     }
 
     private void OnPlayerEscaped()

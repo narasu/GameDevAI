@@ -56,6 +56,7 @@ public class ViewCone : MonoBehaviour
     private void OnEnable()
     {
         findTargets = StartCoroutine("FindTargetsWithDelay", .2f);
+        
     }
 
     private void OnDisable()
@@ -64,7 +65,7 @@ public class ViewCone : MonoBehaviour
         {
             StopCoroutine(findTargets);
         }
-
+        viewMesh.Clear();
         OnTargetLost?.Invoke();
         hasTarget = false;
     }

@@ -16,6 +16,7 @@ public class GuardEditor : Editor
     private SerializedProperty viewTransform;
     private SerializedProperty patrolSpeed;
     private SerializedProperty chaseSpeed;
+    private SerializedProperty blindTime;
     private Vector3 startPosition;
     private Quaternion startRotation;
     
@@ -32,6 +33,7 @@ public class GuardEditor : Editor
         viewTransform = serializedObject.FindProperty("ViewTransform");
         patrolSpeed = serializedObject.FindProperty("PatrolSpeed");
         chaseSpeed = serializedObject.FindProperty("ChaseSpeed");
+        blindTime = serializedObject.FindProperty("BlindTime");
 
         startPosition = guard.transform.position;
         startRotation = guard.transform.rotation;
@@ -46,6 +48,7 @@ public class GuardEditor : Editor
         EditorGUILayout.PropertyField(viewTransform);
         DisplayFloatSlider("Patrol Speed: ", 120.0f, patrolSpeed, 1.0f, 3.0f);
         DisplayFloatSlider("Chase Speed: ", 120.0f, chaseSpeed, 2.0f, 5.0f);
+        EditorGUILayout.PropertyField(blindTime);
         
         EditorGUILayout.Separator();
         

@@ -9,7 +9,6 @@ public class SmokeBomb : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.collider);
         Instantiate(impactPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

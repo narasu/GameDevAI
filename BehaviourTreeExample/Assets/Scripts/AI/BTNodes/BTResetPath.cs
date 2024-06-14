@@ -13,6 +13,7 @@ public class BTResetPath : BTBaseNode
     
     protected override TaskStatus Run()
     {
+        agent.SetDestination(agent.transform.position);
         agent.ResetPath();
         return TaskStatus.Success;
     }

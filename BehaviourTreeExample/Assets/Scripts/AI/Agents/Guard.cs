@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class Guard : MonoBehaviour, IWeaponUser
+public class Guard : MonoBehaviour, IWeaponUser, IBlindable
 {
     public Transform ViewTransform;
     public List<PathNode> PathNodes;
@@ -15,6 +15,8 @@ public class Guard : MonoBehaviour, IWeaponUser
     private PathNode[] patrolNodes;
     public float PatrolSpeed = 2.0f;
     public float ChaseSpeed = 4.0f;
+    public float BlindTime = 5.0f;
+    
     
     private int a_IsWalking = Animator.StringToHash("IsWalking");
     private int a_IsRunning = Animator.StringToHash("IsRunning");
@@ -24,7 +26,7 @@ public class Guard : MonoBehaviour, IWeaponUser
     private ViewCone viewCone;
     private Blackboard blackboard = new();
     private BTBaseNode tree;
-    
+
     private void Awake()
     {
 
@@ -58,7 +60,17 @@ public class Guard : MonoBehaviour, IWeaponUser
 
         BTMoveTo moveTo = new(blackboard);
 
-        BTCacheStatus detect = new(blackboard, Strings.DetectionResult, new BTDetect(blackboard, Strings.Player));
+        var detect = new BTSelector("Detect", 
+            new BTSequence("Blinded", 
+                new BTCheckBool(blackboard, Strings.IsBlinded), 
+                new BTResetPath(blackboard),
+                new BTSetComponentEnabled<ViewCone>(viewCone, false),
+                new BTWait(BlindTime),
+                new BTSetComponentEnabled<ViewCone>(viewCone, true),
+                new BTSetBool(blackboard, Strings.IsBlinded, false)
+                ),
+            new BTCacheStatus(blackboard, Strings.DetectionResult, new BTDetect(blackboard, Strings.Player))
+            );
         
         BTSequence path = new("Path",
             new BTSetSpeed(blackboard, PatrolSpeed),
@@ -67,14 +79,13 @@ public class Guard : MonoBehaviour, IWeaponUser
             new BTStopOnPath(blackboard)
         );
         
-        BTParallel patrol = new("Patrol", Policy.RequireAll, Policy.RequireOne,
+        BTParallel patrol = new("Patrol", Policy.RequireAll, Policy.RequireOne, true,
             new BTInvert(new BTGetStatus(blackboard, Strings.DetectionResult)),
+            new BTInvert(new BTCheckBool(blackboard, Strings.IsBlinded)), 
             path
         );
-        
-        
 
-        BTSequence onDetected = new ("OnDetected", false,
+        BTSequence attack = new ("Attack", false,
 
             new BTSetSpeed(blackboard, ChaseSpeed),
 
@@ -87,28 +98,38 @@ public class Guard : MonoBehaviour, IWeaponUser
                 )
             ),
             
-            new BTParallel("Attack", Policy.RequireAll, Policy.RequireOne, 
+            new BTParallel("", Policy.RequireAll, Policy.RequireOne, true,
                 new BTSelector("Chase", 
                     new BTSetDestinationOnTransform(blackboard, Strings.Player),
                     new BTSetDestinationOnLastSeen(blackboard)
                 ),
-                new BTCondition("ShootOrMoveTo", new BTIsInRange(blackboard, Strings.Player, 8.0f),
-                    new BTSequence("Shoot", new BTResetPath(blackboard),new BTShoot(blackboard, Strings.Player, 1)),
+                new BTCondition("ShootOrMoveTo", 
+                    new BTIsInRange(blackboard, Strings.Player, 8.0f),
+                    new BTSequence("Shoot", 
+                        new BTResetPath(blackboard),
+                        new BTShoot(blackboard, Strings.Player, 1)
+                        ),
                     
                     new BTAnimate(animator, a_IsRunning, moveTo)
                 ),
                 new BTTimeout(1.0f, TaskStatus.Failed, new BTGetStatus(blackboard, Strings.DetectionResult))
             )
         );
+
+        BTParallel onDetected = new("", Policy.RequireAll, Policy.RequireOne, true,
+            new BTInvert(new BTCheckBool(blackboard, Strings.IsBlinded)), 
+            attack
+        );
         
-        var detectionSelector = new BTSelector("DetectionSelector",
+        BTSelector detectionSelector = new("DetectionSelector",
             patrol,
             onDetected
         );
 
         tree = new BTParallel("Tree",Policy.RequireAll, Policy.RequireAll,
             detect,
-            detectionSelector);
+            detectionSelector
+        );
 
     }
 
@@ -148,5 +169,14 @@ public class Guard : MonoBehaviour, IWeaponUser
     public void PickUp()
     {
         blackboard.SetVariable(Strings.HasWeapon, true);
+    }
+
+    
+
+    public void Blind()
+    {
+        blackboard.SetVariable(Strings.IsBlinded, true);
+        blackboard.SetVariable(Strings.LastSeenPosition, transform.position);
+        blackboard.SetVariable(Strings.DetectionResult, TaskStatus.Failed);
     }
 }
