@@ -18,8 +18,9 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
     public float BlindTime = 5.0f;
     
     
-    private int a_IsWalking = Animator.StringToHash("IsWalking");
-    private int a_IsRunning = Animator.StringToHash("IsRunning");
+    private int animIsWalking = Animator.StringToHash("IsWalking");
+    private int animIsRunning = Animator.StringToHash("IsRunning");
+    private int animHasWeapon = Animator.StringToHash("HasWeapon");
     
     private NavMeshAgent agent;
     private Animator animator;
@@ -75,7 +76,7 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
         BTSequence path = new("Path",
             new BTSetSpeed(blackboard, PatrolSpeed),
             new BTSetDestinationOnPath(blackboard), 
-            new BTAnimate(animator, a_IsWalking, moveTo),
+            new BTAnimate(animator, animIsWalking, moveTo),
             new BTStopOnPath(blackboard)
         );
         
@@ -94,7 +95,7 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
                 new BTSequence("GotoCrate", 
                     new BTFindNearest(blackboard, Strings.WeaponCrates, Strings.NearestCrate),
                     new BTSetDestinationOnTransform(blackboard, Strings.NearestCrate),
-                    new BTAnimate(animator, a_IsRunning, moveTo)
+                    new BTAnimate(animator, animIsRunning, moveTo)
                 )
             ),
             
@@ -110,7 +111,7 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
                         new BTShoot(blackboard, Strings.Player, 1)
                         ),
                     
-                    new BTAnimate(animator, a_IsRunning, moveTo)
+                    new BTAnimate(animator, animIsRunning, moveTo)
                 ),
                 new BTTimeout(1.0f, TaskStatus.Failed, new BTGetStatus(blackboard, Strings.DetectionResult))
             )
@@ -169,6 +170,7 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
     public void PickUp()
     {
         blackboard.SetVariable(Strings.HasWeapon, true);
+        animator.SetBool(animHasWeapon, true);
     }
 
     

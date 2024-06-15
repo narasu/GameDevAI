@@ -515,6 +515,7 @@ MonoBehaviour:
     WaitTime: 0
   PatrolSpeed: 2
   ChaseSpeed: 4
+  BlindTime: 5
 --- !u!195 &539429223
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1394,7 +1395,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: ce878b857a0f6ac458928a29afac63d7, type: 2}
+      objectReference: {fileID: 9100000, guid: c520e1e27b186d444acb3931c52a658e, type: 2}
     - target: {fileID: -6057140222963153312, guid: 870795822f643f149b69f2c63265ea01,
         type: 3}
       propertyPath: m_ApplyRootMotion
