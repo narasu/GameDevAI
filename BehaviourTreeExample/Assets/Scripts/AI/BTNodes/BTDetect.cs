@@ -60,6 +60,7 @@ public class BTDetect : BTBaseNode
 
     private void OnTargetLost()
     {
+        target?.GetComponent<IDetectable>()?.CallEscaped();
         target = null;
         hasTarget = false;
         blackboard.SetVariable<Transform>(targetString, null);

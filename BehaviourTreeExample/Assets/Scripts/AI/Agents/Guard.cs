@@ -21,6 +21,7 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
     private int animIsWalking = Animator.StringToHash("IsWalking");
     private int animIsRunning = Animator.StringToHash("IsRunning");
     private int animHasWeapon = Animator.StringToHash("HasWeapon");
+    private int animIsBlinded = Animator.StringToHash("IsBlinded");
     
     private NavMeshAgent agent;
     private Animator animator;
@@ -65,9 +66,11 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
             new BTSequence("Blinded", 
                 new BTCheckBool(blackboard, Strings.IsBlinded), 
                 new BTResetPath(blackboard),
+                new BTAnimSetBool(animator, animIsBlinded, true),
                 new BTSetComponentEnabled<ViewCone>(viewCone, false),
                 new BTWait(BlindTime),
                 new BTSetComponentEnabled<ViewCone>(viewCone, true),
+                new BTAnimSetBool(animator, animIsBlinded, false),
                 new BTSetBool(blackboard, Strings.IsBlinded, false)
                 ),
             new BTCacheStatus(blackboard, Strings.DetectionResult, new BTDetect(blackboard, Strings.Player))

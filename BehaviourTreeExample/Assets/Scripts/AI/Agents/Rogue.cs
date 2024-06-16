@@ -44,10 +44,15 @@ public class Rogue : MonoBehaviour
             new BTMoveTo(blackboard)
         );
 
-        BTSequence onDetected = new("OnDetected", 
-            new BTFindOptimalCover(blackboard),
-            new BTMoveTo(blackboard),
-            new BTThrowSmoke(blackboard, throwOrigin, Strings.Target));
+        
+        BTParallel onDetected = new("OnDetected", Policy.RequireAll, Policy.RequireOne, true,
+            new BTSequence("",
+                new BTFindOptimalCover(blackboard),
+                new BTMoveTo(blackboard),
+                new BTThrowSmoke(blackboard, throwOrigin, Strings.Target)
+                ),
+            new BTCheckBool(blackboard, Strings.IsDetected, TaskStatus.Running, TaskStatus.Failed)
+        );
 
         tree = new BTSelector("", followPlayer, onDetected);
     }
@@ -77,6 +82,7 @@ public class Rogue : MonoBehaviour
 
     private void OnPlayerEscaped()
     {
+        blackboard.SetVariable(Strings.IsDetected, false);
         blackboard.SetVariable<Transform>(Strings.Target, null);
     }
 

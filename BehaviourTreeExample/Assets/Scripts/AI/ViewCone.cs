@@ -38,6 +38,8 @@ public class ViewCone : MonoBehaviour
     private Mesh viewMesh;
     private int stepCount;
 
+    private Timer targetLostTimeout;
+
     private void Start()
     {
         viewMesh = new Mesh();
@@ -46,6 +48,16 @@ public class ViewCone : MonoBehaviour
 
 
         stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
+        targetLostTimeout = new(5.0f, false);
+    }
+
+    private void FixedUpdate()
+    {
+        targetLostTimeout.Run(true, out bool expired);
+        if (expired)
+        {
+            OnTargetLost?.Invoke();
+        }
     }
 
     void LateUpdate()
@@ -65,6 +77,7 @@ public class ViewCone : MonoBehaviour
         {
             StopCoroutine(findTargets);
         }
+        targetLostTimeout.Stop();
         viewMesh.Clear();
         OnTargetLost?.Invoke();
         hasTarget = false;
@@ -105,12 +118,14 @@ public class ViewCone : MonoBehaviour
 
         if (visibleTargets.Count > 0 && !hasTarget)
         {
+            targetLostTimeout.Stop();
             OnTargetFound?.Invoke(visibleTargets[0]);
             visibleTargets[0].GetComponent<IDetectable>()?.CallDetected(transform.parent);
         }
         else if (visibleTargets.Count == 0 && hasTarget)
         {
-            OnTargetLost?.Invoke();
+            targetLostTimeout.Start();
+            //OnTargetLost?.Invoke();
         }
 
         hasTarget = visibleTargets.Count > 0;

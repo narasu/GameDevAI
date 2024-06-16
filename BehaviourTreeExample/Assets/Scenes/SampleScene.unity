@@ -513,7 +513,7 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 0}
     WaitTime: 0
-  PatrolSpeed: 2
+  PatrolSpeed: 1.5
   ChaseSpeed: 4
   BlindTime: 5
 --- !u!195 &539429223
@@ -1155,7 +1155,7 @@ Transform:
   m_GameObject: {fileID: 925384069}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.636, z: 0.127}
+  m_LocalPosition: {x: 0, y: 1, z: 0.127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2206,7 +2206,7 @@ Transform:
   m_GameObject: {fileID: 1433434015}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.635, z: 0}
+  m_LocalPosition: {x: 0, y: -0.999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
