@@ -1,0 +1,7 @@
+@startuml
+class BTDetect {
+    + BTDetect(_blackboard:Blackboard, _targetString:string)
+    + <<override>> OnTerminate() : void
+}
+BTBaseNode <|-- BTDetect
+@enduml

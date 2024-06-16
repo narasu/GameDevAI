@@ -1,0 +1,6 @@
+@startuml
+class BTRepeat {
+    + BTRepeat(_child:BTBaseNode, _numRepeats:int)
+}
+BTDecorator <|-- BTRepeat
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class BTSetDestinationOnTransform {
+    + BTSetDestinationOnTransform(_blackboard:Blackboard, _targetString:string)
+}
+BTBaseNode <|-- BTSetDestinationOnTransform
+@enduml

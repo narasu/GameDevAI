@@ -1,0 +1,7 @@
+@startuml
+class ServiceLocator <<static>> {
+    + {static} Provide(_name:string, _service:object) : void
+    + {static} TryLocate(_name:string, _service:object) : bool
+    + {static} Remove(_name:string) : void
+}
+@enduml

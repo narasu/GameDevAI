@@ -1,0 +1,5 @@
+@startuml
+class SmokeBomb {
+}
+SmokeBomb *-down- SmokeCloud
+@enduml

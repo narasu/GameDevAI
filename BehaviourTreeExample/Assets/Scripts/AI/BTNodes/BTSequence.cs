@@ -48,4 +48,9 @@ public class BTSequence : BTComposite
         return TaskStatus.Success;
     }
 
+    public override void OnTerminate()
+    {
+        base.OnTerminate();
+        currentIndex = 0;
+    }
 }

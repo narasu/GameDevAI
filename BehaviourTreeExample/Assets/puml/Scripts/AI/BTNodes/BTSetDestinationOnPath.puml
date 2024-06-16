@@ -1,0 +1,6 @@
+@startuml
+class BTSetDestinationOnPath {
+    + BTSetDestinationOnPath(_blackboard:Blackboard)
+}
+BTBaseNode <|-- BTSetDestinationOnPath
+@enduml

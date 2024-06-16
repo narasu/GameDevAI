@@ -1,0 +1,6 @@
+@startuml
+class BTCheckBool {
+    + BTCheckBool(_blackboard:Blackboard, _blackboardBool:string, _ifTrue:TaskStatus, _ifFalse:TaskStatus)
+}
+BTBaseNode <|-- BTCheckBool
+@enduml

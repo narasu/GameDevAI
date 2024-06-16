@@ -1,0 +1,6 @@
+@startuml
+class BTIsInRange {
+    + BTIsInRange(_blackboard:Blackboard, _targetString:string, _distance:float)
+}
+BTBaseNode <|-- BTIsInRange
+@enduml

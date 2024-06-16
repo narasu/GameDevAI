@@ -1,0 +1,6 @@
+@startuml
+abstract class BTDecorator {
+    + <<override>> OnTerminate() : void
+}
+BTBaseNode <|-- BTDecorator
+@enduml

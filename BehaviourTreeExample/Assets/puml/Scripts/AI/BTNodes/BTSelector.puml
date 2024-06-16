@@ -1,0 +1,7 @@
+@startuml
+class BTSelector {
+    + BTSelector(_name:string, _children:BTBaseNode[])
+    + <<override>> OnTerminate() : void
+}
+BTComposite <|-- BTSelector
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class Guard {
+    + PatrolSpeed : float = 2.0f
+    + ChaseSpeed : float = 4.0f
+    + BlindTime : float = 5.0f
+    + PickUp() : void
+    + Blind() : void
+}
+IWeaponUser <|-down- Guard
+IBlindable <|-down- Guard
+ServiceLocator <-- Guard
+Guard *---- BTBaseNode
+Guard *---- Blackboard
+Guard *-- ViewCone
+Guard *-- PathNode
+Guard --o WeaponPickup
+@enduml

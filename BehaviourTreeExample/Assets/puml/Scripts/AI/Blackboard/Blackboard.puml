@@ -1,0 +1,6 @@
+@startuml
+class Blackboard {
+    + GetVariable(name:string) : T
+    + SetVariable(name:string, variable:T) : void
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class "BTSetComponentEnabled`1"<T> {
+    + BTSetComponentEnabled(_component:T, _enabled:bool)
+}
+BTBaseNode <|-- "BTSetComponentEnabled`1"
+@enduml

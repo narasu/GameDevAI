@@ -1,0 +1,6 @@
+@startuml
+class BTTimeout {
+    + BTTimeout(_timeoutTime:float, _onTimeout:TaskStatus, _child:BTBaseNode)
+}
+BTDecorator <|-- BTTimeout
+@enduml

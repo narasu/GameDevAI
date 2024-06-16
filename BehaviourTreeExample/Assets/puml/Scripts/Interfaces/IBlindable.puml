@@ -1,0 +1,5 @@
+@startuml
+interface IBlindable {
+    Blind() : void
+}
+@enduml

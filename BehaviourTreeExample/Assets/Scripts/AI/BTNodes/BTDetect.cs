@@ -44,7 +44,6 @@ public class BTDetect : BTBaseNode
         {
             blackboard.SetVariable(Strings.LastSeenPosition, target.position);
         }
-        
         return hasTarget ? TaskStatus.Success : TaskStatus.Failed;
     }
 

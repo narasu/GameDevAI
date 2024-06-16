@@ -1,0 +1,8 @@
+@startuml
+class BTAnimate {
+    + BTAnimate(_animator:Animator, _animHash:int, _child:BTBaseNode)
+    + <<override>> OnExit(_status:TaskStatus) : void
+    + <<override>> OnTerminate() : void
+}
+BTDecorator <|-- BTAnimate
+@enduml

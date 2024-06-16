@@ -1,0 +1,16 @@
+@startuml
+enum TaskStatus {
+    Success,
+    Failed,
+    Running,
+    Inactive,
+}
+abstract class BTBaseNode {
+    + DebugTree : bool <<set>>
+    + <<virtual>> OnExit(_status:TaskStatus) : void
+    + <<virtual>> OnTerminate() : void
+    + Tick(_debug:bool) : TaskStatus
+}
+
+TaskStatus <-- BTBaseNode
+@enduml

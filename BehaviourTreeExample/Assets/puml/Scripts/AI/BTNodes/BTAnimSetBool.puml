@@ -1,0 +1,6 @@
+@startuml
+class BTAnimSetBool {
+    + BTAnimSetBool(_animator:Animator, _animHash:int, _value:bool)
+}
+BTBaseNode <|-- BTAnimSetBool
+@enduml

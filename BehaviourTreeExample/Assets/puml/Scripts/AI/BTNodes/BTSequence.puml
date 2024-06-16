@@ -1,0 +1,8 @@
+@startuml
+class BTSequence {
+    + BTSequence(_name:string, _children:BTBaseNode[])
+    + BTSequence(_name:string, _keepPosition:bool, _children:BTBaseNode[])
+    + <<override>> OnTerminate() : void
+}
+BTComposite <|-- BTSequence
+@enduml

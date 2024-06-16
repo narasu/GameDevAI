@@ -1,0 +1,6 @@
+@startuml
+class BTAnimResetTrigger {
+    + BTAnimResetTrigger(_animator:Animator, _animHash:int)
+}
+BTBaseNode <|-- BTAnimResetTrigger
+@enduml

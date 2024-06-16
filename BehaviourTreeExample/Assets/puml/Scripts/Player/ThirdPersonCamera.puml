@@ -1,0 +1,6 @@
+@startuml
+class ThirdPersonCamera {
+    Start() : void
+    Update() : void
+}
+@enduml

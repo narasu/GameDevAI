@@ -1,0 +1,5 @@
+@startuml
+class Utility <<static>> {
+    + {static} ProvideTransformArrayFromType(arrayName:string) : void
+}
+@enduml

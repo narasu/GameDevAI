@@ -1,0 +1,26 @@
+@startuml
+class ViewCone {
+    + viewRadius : float
+    + viewAngle : float
+    + TargetLostDelay : float = 1.0f
+    + meshResolution : float
+    + edgeResolveIterations : int
+    + edgeDstThreshold : float
+    + maskCutawayDst : float = .1f
+    +  <<event>> OnTargetFound : TargetFoundEventHandler 
+    +  <<event>> OnTargetLost : TargetLostEventHandler 
+    LateUpdate() : void
+    + DirFromAngle(angleInDegrees:float, angleIsGlobal:bool) : Vector3
+}
+class ViewCastInfo <<struct>> {
+    + hit : bool
+    + dst : float
+    + angle : float
+    + ViewCastInfo(_hit:bool, _point:Vector3, _dst:float, _angle:float)
+}
+class EdgeInfo <<struct>> {
+    + EdgeInfo(_pointA:Vector3, _pointB:Vector3)
+}
+ViewCone +-- ViewCastInfo
+ViewCone +-- EdgeInfo
+@enduml

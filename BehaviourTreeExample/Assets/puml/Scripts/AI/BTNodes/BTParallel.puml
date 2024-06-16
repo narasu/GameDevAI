@@ -1,0 +1,12 @@
+@startuml
+enum Policy {
+    RequireAll,
+    RequireOne,
+}
+class BTParallel {
+    + BTParallel(_name:string, _successPolicy:Policy, _failPolicy:Policy, _children:BTBaseNode[])
+    + BTParallel(_name:string, _successPolicy:Policy, _failPolicy:Policy, _terminateChildren:bool, _children:BTBaseNode[])
+}
+BTComposite <|-- BTParallel
+Policy <-- BTParallel
+@enduml

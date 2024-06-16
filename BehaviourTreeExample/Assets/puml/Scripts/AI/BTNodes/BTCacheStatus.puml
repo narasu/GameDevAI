@@ -1,0 +1,6 @@
+@startuml
+class BTCacheStatus {
+    + BTCacheStatus(_blackboard:Blackboard, _statusString:string, _child:BTBaseNode)
+}
+BTDecorator <|-- BTCacheStatus
+@enduml

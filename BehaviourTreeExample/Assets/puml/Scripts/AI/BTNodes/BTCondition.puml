@@ -1,0 +1,7 @@
+@startuml
+class BTCondition {
+    + BTCondition(_name:string, _condition:BTBaseNode, _onSuccess:BTBaseNode, _onFailed:BTBaseNode)
+    + <<override>> OnTerminate() : void
+}
+BTComposite <|-- BTCondition
+@enduml

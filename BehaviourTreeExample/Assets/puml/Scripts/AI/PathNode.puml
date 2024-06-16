@@ -1,0 +1,7 @@
+@startuml
+class PathNode <<struct>> {
+    + WaitTime : float
+    + PathNode(_position:Vector3)
+    + PathNode(_position:Vector3, _rotation:Quaternion)
+}
+@enduml

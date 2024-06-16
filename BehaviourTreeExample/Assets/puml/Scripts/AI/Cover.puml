@@ -1,0 +1,6 @@
+@startuml
+class Cover {
+    + GetDistance(_target:Transform) : float
+    + GetIsBlocking(_target:Transform) : bool
+}
+@enduml

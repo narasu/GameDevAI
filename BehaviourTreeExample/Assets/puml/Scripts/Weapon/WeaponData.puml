@@ -1,0 +1,8 @@
+@startuml
+class WeaponData {
+    + Ammo : int
+    + Damage : float
+    + FireRate : float
+}
+ScriptableObject <|-- WeaponData
+@enduml

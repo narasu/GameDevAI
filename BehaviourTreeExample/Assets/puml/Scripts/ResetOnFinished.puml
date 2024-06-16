@@ -1,0 +1,7 @@
+@startuml
+class ResetOnFinished {
+    + Trigger : string
+    + <<override>> OnStateExit(animator:Animator, stateInfo:AnimatorStateInfo, layerIndex:int) : void
+}
+StateMachineBehaviour <|-- ResetOnFinished
+@enduml

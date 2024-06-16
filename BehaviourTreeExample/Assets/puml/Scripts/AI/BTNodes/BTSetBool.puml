@@ -1,0 +1,6 @@
+@startuml
+class BTSetBool {
+    + BTSetBool(_blackboard:Blackboard, _variable:string, _value:bool)
+}
+BTBaseNode <|-- BTSetBool
+@enduml

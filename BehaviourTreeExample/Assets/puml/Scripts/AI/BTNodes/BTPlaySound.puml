@@ -1,0 +1,6 @@
+@startuml
+class BTPlaySound {
+    + BTPlaySound(_source:AudioSource, _clip:AudioClip)
+}
+BTBaseNode <|-- BTPlaySound
+@enduml

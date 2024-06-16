@@ -1,0 +1,6 @@
+@startuml
+class BTInvert {
+    + BTInvert(_child:BTBaseNode)
+}
+BTDecorator <|-- BTInvert
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class Timer {
+    + Timer(_length:float, _startImmediately:bool)
+    + Start() : void
+    + Run(_fixedDelta:bool, _expired:bool) : void
+    + Reset() : void
+    + Stop() : void
+}
+@enduml

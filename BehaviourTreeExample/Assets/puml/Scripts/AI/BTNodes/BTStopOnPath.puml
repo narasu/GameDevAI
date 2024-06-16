@@ -1,0 +1,6 @@
+@startuml
+class BTStopOnPath {
+    + BTStopOnPath(_blackboard:Blackboard)
+}
+BTBaseNode <|-- BTStopOnPath
+@enduml

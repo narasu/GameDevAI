@@ -1,0 +1,28 @@
+@startuml
+class Strings <<static>> {
+    + {static} UserTransform : string = "UserTransform"
+    + {static} Destination : string = "Destination"
+    + {static} Player : string = "Player"
+    + {static} Agent : string = "Agent"
+    + {static} Animator : string = "Animator"
+    + {static} WeaponCrates : string = "WeaponCrates"
+    + {static} NearestCrate : string = "NearestCrate"
+    + {static} PatrolNodes : string = "PatrolNodes"
+    + {static} PatrolNodeIndex : string = "PatrolNodeIndex"
+    + {static} Target : string = "Target"
+    + {static} LastSeenPosition : string = "LastSeenPosition"
+    + {static} DetectionResult : string = "DetectionResult"
+    + {static} ViewCone : string = "ViewCone"
+    + {static} ViewTransform : string = "ViewTransform"
+    + {static} StartingPosition : string = "StartingPosition"
+    + {static} PatrolSpeed : string = "PatrolSpeed"
+    + {static} ChaseSpeed : string = "ChaseSpeed"
+    + {static} HasWeapon : string = "HasWeapon"
+    + {static} BombPrefab : string = "BombPrefab"
+    + {static} CoverPoints : string = "CoverPoints"
+    + {static} OptimalCover : string = "NearestCover"
+    + {static} IsDetected : string = "IsDetected"
+    + {static} BlindTime : string = "BlindTime"
+    + {static} IsBlinded : string = "IsBlinded"
+}
+@enduml

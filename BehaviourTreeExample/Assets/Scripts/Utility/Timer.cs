@@ -36,6 +36,11 @@ public class Timer
         _expired = false;
     }
 
+    public void Reset()
+    {
+        currentTime = .0f;
+    }
+
     public void Stop()
     {
         isStarted = false;

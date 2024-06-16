@@ -1,0 +1,12 @@
+@startuml
+class Player {
+    +  <<event>> OnDetected : DetectedEventHandler 
+    +  <<event>> OnEscaped : EscapedEventHandler 
+    Start() : void
+    Update() : void
+    + TakeDamage(attacker:GameObject, damage:int) : void
+    + CallDetected(_enemy:Transform) : void
+    + CallEscaped() : void
+}
+IDetectable <|-- Player
+@enduml

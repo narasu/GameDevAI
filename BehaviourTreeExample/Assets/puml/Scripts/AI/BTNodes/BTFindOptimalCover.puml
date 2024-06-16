@@ -1,0 +1,6 @@
+@startuml
+class BTFindOptimalCover {
+    + BTFindOptimalCover(_blackboard:Blackboard)
+}
+BTBaseNode <|-- BTFindOptimalCover
+@enduml

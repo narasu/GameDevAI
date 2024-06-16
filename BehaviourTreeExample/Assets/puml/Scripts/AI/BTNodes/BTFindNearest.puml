@@ -1,0 +1,6 @@
+@startuml
+class BTFindNearest {
+    + BTFindNearest(_blackboard:Blackboard, _transformArrayString:string, _nearestTransformString:string)
+}
+BTBaseNode <|-- BTFindNearest
+@enduml

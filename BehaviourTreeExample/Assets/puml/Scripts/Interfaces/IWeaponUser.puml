@@ -1,0 +1,5 @@
+@startuml
+interface IWeaponUser {
+    PickUp() : void
+}
+@enduml

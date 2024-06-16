@@ -1,0 +1,6 @@
+@startuml
+class Weapon {
+    + Fire() : bool
+}
+MonoBehaviour <|-- Weapon
+@enduml

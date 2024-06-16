@@ -13,6 +13,8 @@ public class Rogue : MonoBehaviour
     private BTBaseNode tree;
     private NavMeshAgent agent;
     private Animator animator;
+    private int animIsMoving = Animator.StringToHash("IsMoving");
+    private int animThrowTrigger = Animator.StringToHash("ThrowTrigger");
     private Blackboard blackboard = new();
 
     private void Awake()
@@ -41,15 +43,19 @@ public class Rogue : MonoBehaviour
         BTParallel followPlayer = new("FollowPlayer", Policy.RequireAll, Policy.RequireOne, true,
             new BTCheckBool(blackboard, Strings.IsDetected, TaskStatus.Failed, TaskStatus.Running),
             new BTSetDestinationOnTransform(blackboard, Strings.Player), 
-            new BTMoveTo(blackboard)
+            new BTAnimate(animator, animIsMoving, new BTMoveTo(blackboard))
         );
 
         
         BTParallel onDetected = new("OnDetected", Policy.RequireAll, Policy.RequireOne, true,
             new BTSequence("",
                 new BTFindOptimalCover(blackboard),
-                new BTMoveTo(blackboard),
-                new BTThrowSmoke(blackboard, throwOrigin, Strings.Target)
+                new BTAnimate(animator, animIsMoving, new BTMoveTo(blackboard)),
+                new BTLookAt(blackboard, Strings.Target),
+                new BTAnimTrigger(animator, animThrowTrigger),
+                new BTWait(0.75f),
+                new BTThrowSmoke(blackboard, throwOrigin, Strings.Target),
+                new BTWait(0.25f)
                 ),
             new BTCheckBool(blackboard, Strings.IsDetected, TaskStatus.Running, TaskStatus.Failed)
         );

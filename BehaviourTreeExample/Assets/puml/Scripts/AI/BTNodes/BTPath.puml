@@ -1,0 +1,6 @@
+@startuml
+class BTPath {
+    + BTPath(_blackboard:Blackboard, _child:BTBaseNode)
+}
+BTDecorator <|-- BTPath
+@enduml

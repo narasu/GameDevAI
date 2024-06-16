@@ -1,0 +1,10 @@
+@startuml
+class Rogue {
+}
+Rogue *---- BTBaseNode
+Rogue *---- Blackboard
+Rogue *-- SmokeBomb
+ServiceLocator <-- Rogue
+Rogue --o Cover
+Rogue --> Player
+@enduml

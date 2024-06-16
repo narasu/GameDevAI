@@ -1,0 +1,6 @@
+@startuml
+class BTSetSpeed {
+    + BTSetSpeed(_blackboard:Blackboard, _speed:float)
+}
+BTBaseNode <|-- BTSetSpeed
+@enduml

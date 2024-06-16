@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +11,7 @@ using UnityEngine.AI;
 public class Guard : MonoBehaviour, IWeaponUser, IBlindable
 {
     public Transform ViewTransform;
+    public GameObject Rifle;
     public List<PathNode> PathNodes;
     public PathNode RootNode;
     private PathNode[] patrolNodes;
@@ -22,8 +24,13 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
     private int animIsRunning = Animator.StringToHash("IsRunning");
     private int animHasWeapon = Animator.StringToHash("HasWeapon");
     private int animIsBlinded = Animator.StringToHash("IsBlinded");
+    private int animFiringTrigger = Animator.StringToHash("FiringTrigger");
     
     private NavMeshAgent agent;
+    private AudioSource source;
+    public AudioClip Alert;
+    public AudioClip GetWeapon;
+    public AudioClip Shoot;
     private Animator animator;
     private ViewCone viewCone;
     private Blackboard blackboard = new();
@@ -33,6 +40,7 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
     {
 
         agent = GetComponent<NavMeshAgent>();
+        source = GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
         viewCone = GetComponentInChildren<ViewCone>();
 
@@ -90,7 +98,6 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
         );
 
         BTSequence attack = new ("Attack", false,
-
             new BTSetSpeed(blackboard, ChaseSpeed),
 
             new BTSelector("GetWeapon",
@@ -111,12 +118,15 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
                     new BTIsInRange(blackboard, Strings.Player, 8.0f),
                     new BTSequence("Shoot", 
                         new BTResetPath(blackboard),
-                        new BTShoot(blackboard, Strings.Player, 1)
-                        ),
-                    
+                        new BTLookAt(blackboard, Strings.Player),
+                        new BTAnimTrigger(animator, animFiringTrigger),
+                        new BTPlaySound(source, Shoot),
+                        new BTShoot(blackboard, Strings.Player, 1),
+                        new BTWait(0.5f)
+                    ),
                     new BTAnimate(animator, animIsRunning, moveTo)
                 ),
-                new BTTimeout(1.0f, TaskStatus.Failed, new BTGetStatus(blackboard, Strings.DetectionResult))
+                new BTGetStatus(blackboard, Strings.DetectionResult)
             )
         );
 
@@ -174,6 +184,8 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
     {
         blackboard.SetVariable(Strings.HasWeapon, true);
         animator.SetBool(animHasWeapon, true);
+        Rifle.SetActive(true);
+        source.PlayOneShot(GetWeapon);
     }
 
     
@@ -183,5 +195,20 @@ public class Guard : MonoBehaviour, IWeaponUser, IBlindable
         blackboard.SetVariable(Strings.IsBlinded, true);
         blackboard.SetVariable(Strings.LastSeenPosition, transform.position);
         blackboard.SetVariable(Strings.DetectionResult, TaskStatus.Failed);
+    }
+
+    private void OnEnable()
+    {
+        viewCone.OnTargetFound += PlayAlertSound;
+    }
+
+    private void OnDisable()
+    {
+        viewCone.OnTargetFound -= PlayAlertSound;
+    }
+
+    private void PlayAlertSound(Transform _)
+    {
+        source.PlayOneShot(Alert);
     }
 }

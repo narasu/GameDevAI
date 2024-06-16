@@ -1,0 +1,6 @@
+@startuml
+class BTThrowSmoke {
+    + BTThrowSmoke(_blackboard:Blackboard, _originTransform:Transform, _targetTransform:string)
+}
+BTBaseNode <|-- BTThrowSmoke
+@enduml

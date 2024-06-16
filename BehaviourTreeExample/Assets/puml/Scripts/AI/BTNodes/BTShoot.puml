@@ -1,0 +1,7 @@
+@startuml
+class BTShoot {
+    + BTShoot(_blackboard:Blackboard, _targetString:string, _damage:int)
+    + <<override>> OnExit(_status:TaskStatus) : void
+}
+BTBaseNode <|-- BTShoot
+@enduml

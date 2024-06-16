@@ -1,0 +1,6 @@
+@startuml
+class BTResetPath {
+    + BTResetPath(_blackboard:Blackboard)
+}
+BTBaseNode <|-- BTResetPath
+@enduml

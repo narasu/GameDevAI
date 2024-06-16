@@ -1,0 +1,6 @@
+@startuml
+interface IDetectable {
+    + CallDetected(_agent:Transform) : void
+    + CallEscaped() : void
+}
+@enduml

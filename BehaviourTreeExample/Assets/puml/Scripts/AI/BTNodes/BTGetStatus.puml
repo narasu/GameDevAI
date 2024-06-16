@@ -1,0 +1,6 @@
+@startuml
+class BTGetStatus {
+    + BTGetStatus(_blackboard:Blackboard, _statusString:string)
+}
+BTBaseNode <|-- BTGetStatus
+@enduml

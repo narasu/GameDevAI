@@ -30,5 +30,10 @@ public class BTSelector : BTComposite
         currentIndex = 0;
         return TaskStatus.Failed;
     }
-    
+
+    public override void OnTerminate()
+    {
+        base.OnTerminate();
+        currentIndex = 0;
+    }
 }

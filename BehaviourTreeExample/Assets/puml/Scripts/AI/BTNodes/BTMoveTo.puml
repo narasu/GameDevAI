@@ -1,0 +1,6 @@
+@startuml
+class BTMoveTo {
+    + BTMoveTo(_blackboard:Blackboard)
+}
+BTBaseNode <|-- BTMoveTo
+@enduml

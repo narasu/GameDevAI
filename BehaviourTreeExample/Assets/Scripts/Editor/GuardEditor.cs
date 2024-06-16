@@ -14,9 +14,14 @@ public class GuardEditor : Editor
     private SerializedProperty pathRootNode;
     private SerializedProperty pathNodesList;
     private SerializedProperty viewTransform;
+    private SerializedProperty rifle;
     private SerializedProperty patrolSpeed;
     private SerializedProperty chaseSpeed;
     private SerializedProperty blindTime;
+    private SerializedProperty alertClip;
+    private SerializedProperty getWeaponClip;
+    private SerializedProperty shootClip;
+    
     private Vector3 startPosition;
     private Quaternion startRotation;
     
@@ -31,9 +36,13 @@ public class GuardEditor : Editor
         pathRootNode = serializedObject.FindProperty("RootNode");
         pathNodesList = serializedObject.FindProperty("PathNodes");
         viewTransform = serializedObject.FindProperty("ViewTransform");
+        rifle = serializedObject.FindProperty("Rifle");
         patrolSpeed = serializedObject.FindProperty("PatrolSpeed");
         chaseSpeed = serializedObject.FindProperty("ChaseSpeed");
         blindTime = serializedObject.FindProperty("BlindTime");
+        alertClip = serializedObject.FindProperty("Alert");
+        getWeaponClip = serializedObject.FindProperty("GetWeapon");
+        shootClip = serializedObject.FindProperty("Shoot");
 
         startPosition = guard.transform.position;
         startRotation = guard.transform.rotation;
@@ -46,9 +55,18 @@ public class GuardEditor : Editor
         GUILayout.Label("Properties", EditorStyles.boldLabel);
         
         EditorGUILayout.PropertyField(viewTransform);
+        EditorGUILayout.PropertyField(rifle);
         DisplayFloatSlider("Patrol Speed: ", 120.0f, patrolSpeed, 1.0f, 3.0f);
         DisplayFloatSlider("Chase Speed: ", 120.0f, chaseSpeed, 2.0f, 5.0f);
         EditorGUILayout.PropertyField(blindTime);
+        
+        EditorGUILayout.Separator();
+        
+        GUILayout.Label("Sounds", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(alertClip);
+        EditorGUILayout.PropertyField(getWeaponClip);
+        EditorGUILayout.PropertyField(shootClip);
+        
         
         EditorGUILayout.Separator();
         

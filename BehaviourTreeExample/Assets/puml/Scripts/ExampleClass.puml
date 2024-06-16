@@ -1,0 +1,9 @@
+@startuml
+class ExampleClass {
+    + someData : string = "DATA"
+    + GetName() : string
+    + SetName(newName:string) : void
+    + Prepare() : void
+    + DoSomething() : void
+}
+@enduml
